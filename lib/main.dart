@@ -1,9 +1,12 @@
 
-import 'package:prd/view/login_screen.dart';
+
 
 import 'controller/ex_file.dart';
 void main() {
-  runApp(const MyApp());
+
+  runApp(ChangeNotifierProvider<MyProvider>(
+      create: (context)=>MyProvider(),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,11 +18,22 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        bottomNavigationBarTheme:  BottomNavigationBarThemeData(
+            selectedItemColor:KBule,
+          unselectedItemColor: KCyan,
+          unselectedIconTheme: const IconThemeData(size: 26),
+          selectedIconTheme:const IconThemeData(size: 30) ,
+          selectedLabelStyle: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
+
+          backgroundColor: Colors.blue
+        )
       ),
-      initialRoute:'/onBoard' ,
+      initialRoute:'/layout' ,
+
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),
-        '/login' :(context) => LoginScreen()
+        '/login' :(context) => LoginScreen(),
+        '/layout' :(context) => const LayoutScreen()
       },
     );
   }
