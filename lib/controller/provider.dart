@@ -6,10 +6,10 @@ class MyProvider extends ChangeNotifier {
 
   int currentIndex = 0 ;
   List<Widget> screens = const[
-    HomeScreen(),CategoryScreen(),FavoriteScreen(),SettingsScreen()
+    HomeScreen(),FavoriteScreen(),CategoryScreen(),SettingsScreen()
   ];
   List<String> screenTitles = const[
-    'Home Screen','Categories Screen','Favourites Screen','Settings Screen'
+    'Home Screen','Favourite Screen','Cart Screen','Settings Screen'
   ];
 
  void changeBottomNavBar(index) {

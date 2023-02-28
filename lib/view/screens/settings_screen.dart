@@ -13,7 +13,7 @@ class SettingsScreen extends StatelessWidget {
           children:  [
             const SizedBox(height: 25,),
 
-            Icon(Icons.account_circle,color:KBule,size: 120,),
+            Icon(Icons.account_circle,color:KColor,size: 120,),
             const SizedBox(height: 15,),
 
             buildCard(txt:'Edit information',icon: Icons.edit),
@@ -46,11 +46,11 @@ class SettingsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children:  [
-                  Icon(icon,color: KCyan,),
+                  Icon(icon,color: KColor2,),
                   Text(' $txt   ',style: TextStyle(
-                      fontSize: 24,fontWeight: FontWeight.w700,color: KCyan
+                      fontSize: 24,fontWeight: FontWeight.w700,color: KColor2
                   ),),
-                  Icon(Icons.arrow_forward_ios,color: KCyan,),
+                  Icon(Icons.arrow_forward_ios,color: KColor2,),
 
                 ],
               ),

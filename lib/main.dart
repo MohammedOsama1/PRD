@@ -19,13 +19,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         bottomNavigationBarTheme:  BottomNavigationBarThemeData(
-            selectedItemColor:KBule,
-          unselectedItemColor: KCyan,
+
+            selectedItemColor:KColor,
+          elevation: 0,
+          unselectedItemColor: KColor2,
+
           unselectedIconTheme: const IconThemeData(size: 26),
           selectedIconTheme:const IconThemeData(size: 30) ,
           selectedLabelStyle: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
 
-          backgroundColor: Colors.blue
+          backgroundColor: Colors.white10
         )
       ),
       initialRoute:'/layout' ,
@@ -33,7 +36,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),
         '/login' :(context) => LoginScreen(),
-        '/layout' :(context) => const LayoutScreen()
+        '/layout' :(context) => const LayoutScreen(),
+
       },
     );
   }

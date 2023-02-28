@@ -10,20 +10,20 @@ class LayoutScreen extends StatelessWidget {
     return  Scaffold(
       appBar:AppBar(
         title:  Text(pro.screenTitles[pro.currentIndex],),
-        backgroundColor: KBule,
+        backgroundColor: KColor,
       ) ,
       body: pro.screens[pro.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor:Colors.black,
+        type: BottomNavigationBarType.fixed,
         currentIndex: pro.currentIndex ,
         onTap: (value){
             pro.changeBottomNavBar(value);
         },
         items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home',),
-        BottomNavigationBarItem(icon: Icon(Icons.style_rounded),label: 'Categories'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite),label: 'Favorite'),
-        BottomNavigationBarItem(icon: Icon(Icons.settings),label: 'Setting'),
+        BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: 'Home',),
+        BottomNavigationBarItem(icon: Icon(Icons.favorite_border),label: 'Favorite'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined),label: 'Cart'),
+        BottomNavigationBarItem(icon: Icon(Icons.settings_suggest_outlined),label: 'Setting'),
 
       ],),
     );

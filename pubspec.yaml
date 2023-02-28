@@ -39,6 +39,7 @@ dependencies:
   smooth_page_indicator: any
   shared_preferences:
   provider:
+  fl_chart: ^0.61.0
 
 
 dev_dependencies:
