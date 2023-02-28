@@ -16,10 +16,8 @@ class _ItemDetailsState extends State<ItemDetails> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
-
         backgroundColor:KColor,
         elevation: 0,
-
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -78,25 +76,20 @@ class _ItemDetailsState extends State<ItemDetails> {
                               fontSize: 40),
                         ),
                         const Spacer(),
-                        CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 16,
-                            child: Center(child: IconButton(icon: const Icon(Icons.add,color: Colors.white,size: 17,), onPressed: () {  },))),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 6.0),
-                          child: Text(
-                            "  1  ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20),
-                          ),
-                        ),
-                        CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 16,
-                            child: IconButton(icon: const Icon(Icons.add,color: Colors.white,size: 17,), onPressed: () {  },),
+                        Row(
+                          children:  [
+                            const SizedBox(width: 20,),
+                            Container(color:KColor,child: Icon(Icons.add,size: 25,color: Colors.white,)),
+                            const Text(
+                              "  1  ",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 25),
                             ),
+                            Container(color:KColor,child: Icon(Icons.remove,size: 25,color: Colors.white,)),
+                          ],
+                        ),
                       ],
                     ),
                     const SizedBox(height: 5,),
