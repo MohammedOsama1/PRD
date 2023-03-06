@@ -63,7 +63,6 @@ class CategoryScreen extends StatelessWidget {
               ),
             ),
           ),
-
           Positioned(
             top: 5,
             right: 5,

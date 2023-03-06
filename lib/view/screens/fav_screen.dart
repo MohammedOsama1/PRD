@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prd/view/widgets/item_details.dart';
 
+import '../theme.dart';
+
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
@@ -10,79 +12,74 @@ class FavoriteScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children:
-
           em.map((e) =>  InkWell(
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails()));
             },
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Material(
-                elevation: 2,
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20))),
-                      child: Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Image(
-                              width: 70,
-                              height: 70,
-                              image: NetworkImage(
-                                'https://m.media-amazon.com/images/I/41i7KfBITBL._AC_SX679_.jpg',
-                              ),
-                            ),
+            child: Stack(
+              children: [
+                Container(width: MediaQuery.of(context).size.width,
+                  height:  MediaQuery.of(context).size.height/7,
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 10,),
+                        Image(
+                          height:MediaQuery.of(context).size.height/11 ,
+                          width: MediaQuery.of(context).size.width/4.6,
+                          fit: BoxFit.cover,
+                          image: const NetworkImage(
+                            'https://picsum.photos/400/300',
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Product 1',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w700),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:MainAxisAlignment.spaceAround,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text('item one example',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  const Text('Phones',style: TextStyle(fontSize: 16,color: Colors.grey)),
+                                  Text('\$16',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
+                                ],
                               ),
-                              Text(
-                                'Iphone Iphone Iphone Iphone',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.grey),
-                              ),
+
                             ],
                           ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
-                    Positioned(
-                        right: 10,
-                        top: 10,
-                        child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(1),
-                                    bottomLeft: Radius.circular(30),
-                                    bottomRight: Radius.circular(30)),
-                                color: Colors.pink),
-                            child: const Icon(
-                              Icons.favorite,
-                              size: 25,
-
-                              color: Colors.white,
-                            )))
-                  ],
+                  ),
                 ),
-              ),
+
+                Positioned(
+                    right: 15,
+                    top: 26,
+                    child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                                bottomLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30)),
+                            color: Colors.pink),
+                        child: const Icon(
+                          Icons.favorite,
+                          size: 25,
+
+                          color: Colors.white,
+                        )))
+              ],
             ),
           ),).toList()
 

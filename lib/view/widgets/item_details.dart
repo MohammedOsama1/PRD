@@ -274,3 +274,7 @@ class _ItemDetailsState extends State<ItemDetails> {
   }
 }
 
+// RiveAnimation.network(
+//           'https://cdn.rive.app/animations/vehicles.riv',
+//         ),
+
