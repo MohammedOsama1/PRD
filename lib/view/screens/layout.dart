@@ -10,6 +10,7 @@ class LayoutScreen extends StatelessWidget {
     return  Scaffold(
       appBar:AppBar(
         title:  Text(pro.screenTitles[pro.currentIndex],),
+        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.search))],
         backgroundColor: KColor,
       ) ,
       body: pro.screens[pro.currentIndex],

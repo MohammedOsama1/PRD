@@ -66,16 +66,16 @@ class FavoriteScreen extends StatelessWidget {
                         width: 40,
                         height: 40,
                         margin: EdgeInsets.all(8),
-                        decoration: const BoxDecoration(
+                        decoration:  BoxDecoration(
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30),
                                 bottomLeft: Radius.circular(30),
                                 bottomRight: Radius.circular(30)),
-                            color: Colors.pink),
+                            color: KColor),
                         child: const Icon(
                           Icons.favorite,
-                          size: 25,
+                          size: 22,
 
                           color: Colors.white,
                         )))
