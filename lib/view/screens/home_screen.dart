@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 6,),
+
           CarouselSlider.builder(
             itemCount: _slideImages.length,
             options: CarouselOptions(
