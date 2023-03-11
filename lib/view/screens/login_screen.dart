@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:prd/controller/ex_file.dart';
 
 import 'package:prd/view/widgets/txtFF.dart';
 class LoginScreen extends StatelessWidget {
@@ -18,7 +18,15 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Stack(children:[
-                Image.asset('assets/w.gif'),
+                Stack(
+                  children: [
+                    Image.asset('assets/w.gif'),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 60.0),
+                      child: Text('    Welcome back',style: TextStyle(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Column(
@@ -56,9 +64,7 @@ class LoginScreen extends StatelessWidget {
                       InkWell(
                         onTap: () async {
                           if (formKey.currentState!.validate()) {
-                            // LoginCubit.get(context).userLogin(
-                            //     emailController.text,
-                            //     passwordController.text);
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LayoutScreen()), (route) => false);
                           }
                         },
                         child: Container(
@@ -90,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            child: const Text(' Register Now',
+                            child: const Text(' Register',
                                 style: TextStyle(
                                     fontSize: 22, color: Colors.blueAccent)),
                           ),

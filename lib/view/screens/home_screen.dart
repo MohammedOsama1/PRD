@@ -136,9 +136,6 @@ class _HomeScreenState extends State<HomeScreen> {
                  children: show.map((e) => buildOneItem()).toList()),
            )
 
-
-
-
         ],
       ),
     );
