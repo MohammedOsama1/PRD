@@ -1,6 +1,3 @@
-
-
-
 import 'controller/ex_file.dart';
 void main() {
 
@@ -30,7 +27,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white10
         )
       ),
-      initialRoute:'/login' ,
+      initialRoute:'/onBoard' ,
 
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),

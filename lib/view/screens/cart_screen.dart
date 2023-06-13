@@ -9,7 +9,7 @@ class CategoryScreen extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height/1.4,
+          height: MediaQuery.of(context).size.height/1.5,
           child: SingleChildScrollView(
             child: Column(children: ll.map((e) => Stack(
               children: [
@@ -76,50 +76,53 @@ class CategoryScreen extends StatelessWidget {
             )).toList(),),
           ),
         ),
-        Container( height: MediaQuery.of(context).size.height/1.4-MediaQuery.of(context).size.height/1.4,
+        Card(
+          elevation: 10,
+          child: Container(
+              height:MediaQuery.of(context).size.height/6,
+              width: MediaQuery.of(context).size.width,
             child: Column(
-          children: [
-            Row(children: [Text('   Total items') ,Spacer() ,Text('20  ') ],),
-            Row(children: [Text('   Total items') ,Spacer() ,Text('20  ') ],),
-            Row(children: [
-              Container(
-              margin: const EdgeInsets.symmetric(
-                  vertical: 10, horizontal: 40),
-              width: double.infinity,
-              height: 30,
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(20)),
-              child: const Center(
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Divider(),
+                Row(
+                  children: [
+                    Text('  total Items',style: TextStyle(fontSize: 20),),
+                    Spacer(),
+                    Text('65 ',style: TextStyle(fontSize: 18),),
+                  ],
                 ),
-              ),
-            ),
-              Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-              width: double.infinity,
-              height: 30,
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.circular(20)),
-              child: const Center(
-                child: Text(
-                  'Check Out',
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
-            )],)
+                Divider(),
+                Row(
+                  children: [
+                    Text('  total price',style: TextStyle(fontSize: 20),),
+                    Spacer(),
+                    Text('\$ 221 ',style: TextStyle(fontSize: 18),),
 
-          ],
-        ))
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 40),
+                  width: MediaQuery.of(context).size.width/2,
+                  height: 30,
+                  decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: const Center(
+                    child: Text(
+                      'Checkout',
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+    ),
+        )
       ],
     );
   }
