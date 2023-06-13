@@ -20,42 +20,49 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: PageView.builder(
-                  onPageChanged: (value) {
-                    setState(() {
-                      index = value;
-                    });
-                  },
-                  controller: controller,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (BuildContext context, index) =>
-                      buildOn(dataList[index]),
-                  itemCount: 2,
+        body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage('assets/giphy.gif'))
+            ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    onPageChanged: (value) {
+                      setState(() {
+                        index = value;
+                      });
+                    },
+                    controller: controller,
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (BuildContext context, index) =>
+                        buildOn(dataList[index]),
+                    itemCount: 2,
+                  ),
                 ),
-              ),
-              index == 0
-                  ? SmoothPageIndicator(
-                      controller: controller,
-                      count: 2,
-                      effect: const ExpandingDotsEffect(
-                          dotColor: Colors.grey,
-                          activeDotColor: Colors.blueAccent,
-                          dotHeight: 10,
-                          expansionFactor: 4,
-                          dotWidth: 10,
-                          spacing: 5),
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 10,
-              )
-            ],
+                index == 0
+                    ? SmoothPageIndicator(
+                        controller: controller,
+                        count: 2,
+                        effect: const ExpandingDotsEffect(
+                            dotColor: Colors.grey,
+                            activeDotColor: Colors.blueAccent,
+                            dotHeight: 10,
+                            expansionFactor: 4,
+                            dotWidth: 10,
+                            spacing: 5),
+                      )
+                    : Container(),
+                const SizedBox(
+                  height: 10,
+                )
+              ],
+            ),
           ),
         ),
         floatingActionButton: index == 0

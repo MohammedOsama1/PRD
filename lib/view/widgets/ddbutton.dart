@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prd/view/theme.dart';
 
 
 class DefaultButton extends StatelessWidget {
@@ -13,13 +14,13 @@ class DefaultButton extends StatelessWidget {
     return InkWell(
         onTap: onTap,
         child: Container(
-          color: Colors.amber,
+          color: KColor,
           width: double.infinity,
           height: 55,
           child: Center(
             child: Text(
               label,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white,fontSize: 22),
             ),
           ),
         ));

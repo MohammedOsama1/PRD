@@ -1,4 +1,5 @@
 import 'controller/ex_file.dart';
+import 'view/screens/register_screen.dart';
 void main() {
 
   runApp(ChangeNotifierProvider<MyProvider>(
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),
         '/login' :(context) => LoginScreen(),
+        '/register' :(context) => RegisterScreen(),
         '/layout' :(context) => const LayoutScreen(),
 
       },
