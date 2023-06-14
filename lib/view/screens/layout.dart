@@ -9,10 +9,12 @@ class LayoutScreen extends StatelessWidget {
     final pro = Provider.of<MyProvider>(context);
     return  Scaffold(
       appBar:AppBar(
-        title:  Text(pro.screenTitles[pro.currentIndex],),
-        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.search))],
+        title:  Text(pro.screenTitles[pro.currentIndex],style: TextStyle(color: Colors.white),),
+        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.search,color: Colors.white,))],
         backgroundColor: KColor,
       ) ,
+      backgroundColor: KCBackground,
+
       body: pro.screens[pro.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

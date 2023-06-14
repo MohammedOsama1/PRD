@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:prd/view/widgets/item_details.dart';
 
-import '../theme.dart';
+import '../../controller/ex_file.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-   List em = List.generate(20, (index) => 'null');
+    final pro = Provider.of<MyProvider>(context);
+
+    List em = List.generate(20, (index) => 'null');
     return SingleChildScrollView(
       child: Column(
         children:
@@ -22,6 +23,7 @@ class FavoriteScreen extends StatelessWidget {
                   height:  MediaQuery.of(context).size.height/7,
                   padding: const EdgeInsets.all(10.0),
                   child: Card(
+                    color: Colors.white,
                     child: Row(
                       children: [
                         const SizedBox(width: 10,),
@@ -43,7 +45,7 @@ class FavoriteScreen extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text('item one example',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                                      Text('item one example',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: KAllWhite)),
                                     ],
                                   ),
                                   const Text('Phones',style: TextStyle(fontSize: 16,color: Colors.grey)),

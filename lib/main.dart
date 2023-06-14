@@ -1,10 +1,27 @@
 import 'controller/ex_file.dart';
+import 'view/screens/add_product.dart';
 import 'view/screens/register_screen.dart';
 void main() {
 
-  runApp(ChangeNotifierProvider<MyProvider>(
-      create: (context)=>MyProvider(),
-      child: const MyApp()));
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider<MyProvider>(
+            create: (context) => MyProvider(),
+          ),
+          ChangeNotifierProvider<HomeProvider>(
+            create: (context) => HomeProvider(),
+          ),
+          ChangeNotifierProvider<CartProvider>(
+            create: (context) => CartProvider(),
+          ),
+          ChangeNotifierProvider<FavProvider>(
+            create: (context) => FavProvider(),
+          ),
+        ],
+        child: const MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,9 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         bottomNavigationBarTheme:  BottomNavigationBarThemeData(
          selectedItemColor:KColor,
-         elevation: 0,
-            unselectedItemColor: KColor2,
-
+         elevation: 0, unselectedItemColor: KColor2,
           unselectedIconTheme: const IconThemeData(size: 26),
           selectedIconTheme:const IconThemeData(size: 30) ,
           selectedLabelStyle: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
@@ -29,12 +44,12 @@ class MyApp extends StatelessWidget {
         )
       ),
       initialRoute:'/onBoard' ,
-
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),
         '/login' :(context) => LoginScreen(),
         '/register' :(context) => RegisterScreen(),
         '/layout' :(context) => const LayoutScreen(),
+        '/editScreen' :(context) =>  AddProductScreen(),
 
       },
     );
