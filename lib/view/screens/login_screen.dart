@@ -58,7 +58,6 @@ class LoginScreen extends StatelessWidget {
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
                             onPressed: () {
-                              // LoginCubit.get(context).hidePassword();
                             },
                             icon: true
                                 ? const Icon(Icons.visibility_outlined)
@@ -71,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: () async {
                             if (formKey.currentState!.validate()) {
-                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LayoutScreen()), (route) => false);
+                              bloc.login(emailController.text, passwordController.text,context);
                             }
                           },
                           child: Container(

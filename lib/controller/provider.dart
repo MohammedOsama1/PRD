@@ -28,6 +28,7 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
 }
 
 class CartProvider extends ChangeNotifier {
