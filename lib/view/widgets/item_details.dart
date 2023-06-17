@@ -5,8 +5,8 @@ import 'package:prd/view/theme.dart';
 
 
 class ItemDetails extends StatefulWidget {
-  const ItemDetails({Key? key,    this.item}) : super(key: key);
-  final  item ;
+  const ItemDetails({Key? key,    required this.item}) : super(key: key);
+  final Item item ;
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
 }

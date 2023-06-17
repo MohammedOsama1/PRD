@@ -83,7 +83,7 @@ class CategoryScreen extends StatelessWidget {
                       const SizedBox(width: 10,),
                       GestureDetector(
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails(item: bloc.item.first,)));
 
                         },
                         child: Image(

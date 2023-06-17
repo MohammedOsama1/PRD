@@ -15,7 +15,7 @@ class FavoriteScreen extends StatelessWidget {
         children:
           em.map((e) =>  InkWell(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails()));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails(item: bloc.item.first,)));
             },
             child: Stack(
               children: [

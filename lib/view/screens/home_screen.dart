@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
+import 'package:prd/view/screens/item_based_category.dart';
 
 import '../../model/category_item.dart';
 import '../widgets/item_details.dart';
@@ -18,12 +19,12 @@ class HomeScreen extends StatelessWidget {
       'https://picsum.photos/1200/800?random=4',
     ];
     List<CategoryModelItem> _cats = [
-      CategoryModelItem(name: 'Phones', Icon: Icons.phone_android),
-      CategoryModelItem(name: 'Heads', Icon: Icons.headphones),
-      CategoryModelItem(name: 'notebook', Icon: Icons.edit_note_sharp),
-      CategoryModelItem(name: 'Laptops', Icon: Icons.laptop),
-      CategoryModelItem(name: 'jtool', Icon: Icons.handyman),
-      CategoryModelItem(name: 'copen', Icon: Icons.toys_outlined),
+      CategoryModelItem(name: 'Copen', Icon: Icons.toys_outlined,num: 1),
+      CategoryModelItem(name: 'Heads', Icon: Icons.headphones,num: 2),
+      CategoryModelItem(name: 'Jtool', Icon: Icons.handyman,num: 3),
+      CategoryModelItem(name: 'Laptops', Icon: Icons.laptop,num: 4),
+      CategoryModelItem(name: 'Notebook', Icon: Icons.edit_note_sharp,num: 5),
+      CategoryModelItem(name: 'Phones', Icon: Icons.phone_android,num: 6),
     ];
     return SingleChildScrollView(
 
@@ -96,7 +97,9 @@ class HomeScreen extends StatelessWidget {
                        width: 60,
                        height: 60,
                        decoration: BoxDecoration(color: KColor,borderRadius: BorderRadius.circular(15)),
-                       child: IconButton(onPressed: (){}, icon: Icon(e.Icon,color: Colors.white,size: 30,))),
+                       child: IconButton(onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (_)=>ItemsBasedCat(CatName:e.name, Catid: e.num,)));
+                       }, icon: Icon(e.Icon,color: Colors.white,size: 30,))),
                    SizedBox(height: 5,),
                    Text(e.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: KAllWhite),)
                  ],

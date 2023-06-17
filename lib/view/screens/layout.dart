@@ -1,4 +1,6 @@
 
+import 'package:prd/view/screens/search_screen.dart';
+
 import '../../controller/ex_file.dart';
 
 class LayoutScreen extends StatelessWidget {
@@ -10,7 +12,10 @@ class LayoutScreen extends StatelessWidget {
     return  Scaffold(
       appBar:AppBar(
         title:  Text(pro.screenTitles[pro.currentIndex],style: TextStyle(color: Colors.white),),
-        actions: [IconButton(onPressed: (){}, icon: Icon(Icons.search,color: Colors.white,))],
+        actions: [IconButton(onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>SearchScreen()));
+
+        }, icon: Icon(Icons.search,color: Colors.white,))],
         backgroundColor: KColor,
       ) ,
       backgroundColor: KCBackground,

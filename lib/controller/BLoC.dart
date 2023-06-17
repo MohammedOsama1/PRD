@@ -9,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 class BLoC {
   final _ItemSubject = new BehaviorSubject<List<Item>>();
   Stream<List<Item>> get Itemz => _ItemSubject.stream;
-  List <Item> _item= [];
+  List <Item> item= [];
 
   String token = '';
   Future<void> login(String email, String password,context) async {
@@ -62,9 +62,9 @@ class BLoC {
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
         List<dynamic> _Temp = data['data'];
-        _item = _Temp.map((e) => Item.fromJson(e)).toList();
-        print(_item.first);
-        _ItemSubject.add(_item);
+        item = _Temp.map((e) => Item.fromJson(e)).toList();
+        print(item.first);
+        _ItemSubject.add(item);
         _ItemSubject.kill();
       }
       else {

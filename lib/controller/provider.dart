@@ -1,5 +1,7 @@
 
 
+import 'package:prd/model/Item.dart';
+
 import 'ex_file.dart';
 
 class MyProvider extends ChangeNotifier {
@@ -27,6 +29,24 @@ class HomeProvider extends ChangeNotifier {
     this.currentSlideIndex = index;
     notifyListeners();
   }
+
+
+  List<Item> _filteredData = [];
+  bool _isLoading = false;
+
+  List<Item> get filteredData => _filteredData;
+  bool get isLoading => _isLoading;
+
+  void setFilteredData(List<Item> filteredData) {
+  _filteredData = filteredData;
+  notifyListeners();
+  }
+
+  void setLoading(bool isLoading) {
+  _isLoading = isLoading;
+  notifyListeners();
+  }
+
 
 
 }
