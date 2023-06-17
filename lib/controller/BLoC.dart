@@ -3,8 +3,14 @@ import 'dart:math';
 
 import 'package:http/http.dart';
 import 'package:prd/controller/ex_file.dart';
+import 'package:prd/model/Item.dart';
+import 'package:rxdart/rxdart.dart';
 
 class BLoC {
+  final _ItemSubject = new BehaviorSubject<List<Item>>();
+  Stream<List<Item>> get Itemz => _ItemSubject.stream;
+  List <Item> _item= [];
+
   String token = '';
   Future<void> login(String email, String password,context) async {
       Response response = await post(
@@ -15,6 +21,7 @@ class BLoC {
       if (response.statusCode == 200) {
         token = data ['access_token'];
         print(token);
+        await getHomeData();
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LayoutScreen()), (route) => false);
       }
       else {
@@ -46,4 +53,30 @@ class BLoC {
       }
 
   }
+
+  Future<void> getHomeData() async {
+
+      Response response = await get(
+          Uri.parse("http://127.0.0.1:8000/api/AllCategories"),headers: {"Authorization": "Bearer ${token}"});
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = json.decode(response.body);
+        List<dynamic> _Temp = data['data'];
+        _item = _Temp.map((e) => Item.fromJson(e)).toList();
+        print(_item.first);
+        _ItemSubject.add(_item);
+        _ItemSubject.kill();
+      }
+      else {
+
+      }
+
+  }
 }
+
+
+extension  on BehaviorSubject {
+  kill (){
+    this.sink;
+    this.close();
+    this.drain();}}

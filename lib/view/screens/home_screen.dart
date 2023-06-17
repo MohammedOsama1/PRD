@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:prd/controller/ex_file.dart';
+import 'package:prd/model/Item.dart';
 
 import '../../model/category_item.dart';
 import '../widgets/item_details.dart';
@@ -10,8 +11,6 @@ class HomeScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final pro = Provider.of<HomeProvider>(context);
-
-    List show = List.generate(20, (index) => null);
     List<String> _slideImages = [
       'https://picsum.photos/1200/800?random=1',
       'https://picsum.photos/1200/800?random=2',
@@ -21,11 +20,10 @@ class HomeScreen extends StatelessWidget {
     List<CategoryModelItem> _cats = [
       CategoryModelItem(name: 'Phones', Icon: Icons.phone_android),
       CategoryModelItem(name: 'Heads', Icon: Icons.headphones),
-      CategoryModelItem(name: 'clothes', Icon: Icons.checkroom_rounded),
+      CategoryModelItem(name: 'notebook', Icon: Icons.edit_note_sharp),
       CategoryModelItem(name: 'Laptops', Icon: Icons.laptop),
-      CategoryModelItem(name: 'watches', Icon: Icons.watch),
-      CategoryModelItem(name: 'Toys', Icon: Icons.toys_outlined),
-      CategoryModelItem(name: 'Wallets', Icon: Icons.wallet),
+      CategoryModelItem(name: 'jtool', Icon: Icons.handyman),
+      CategoryModelItem(name: 'copen', Icon: Icons.toys_outlined),
     ];
     return SingleChildScrollView(
 
@@ -121,13 +119,26 @@ class HomeScreen extends StatelessWidget {
              height: 700,
              padding: EdgeInsets.all(8),
              width: double.infinity,
-             child: GridView.extent(
-                 physics: NeverScrollableScrollPhysics(),
-                 maxCrossAxisExtent: 180,
-                 mainAxisSpacing: 10,
-                 crossAxisSpacing: 10,
-                 childAspectRatio: 0.7,
-                 children: show.map((e) => buildOneItem(context)).toList()),
+             child: StreamBuilder(
+               stream: bloc.Itemz,
+               builder: (context, snapshot) {
+                 if (snapshot.hasData) {
+                   return GridView.extent(
+                     physics: NeverScrollableScrollPhysics(),
+                     maxCrossAxisExtent: 200,
+                     mainAxisSpacing: 20,
+                     crossAxisSpacing: 10,
+                     childAspectRatio: 0.76,
+                     children: snapshot.data!.map((e) => buildOneItem(e,context)).toList(),
+                   );
+                 } else if (snapshot.hasError) {
+                   return Text('Error: ${snapshot.error}');
+                 } else {
+                   return CircularProgressIndicator();
+                 }
+               },
+             ),
+
            )
 
         ],
@@ -135,57 +146,69 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector buildOneItem(context) {
+  GestureDetector buildOneItem(Item e, context) {
+    List<String> txt = e.productTitle!.split(" ");
+    String title = txt.take(3).join(" ");
 
     return GestureDetector(
-      onTap: (){              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails()));
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) => ItemDetails(item: e)));
       },
-      child: Column(
+      child: Container(
+        width: 140,
+        height: 230,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 110,
-              height: 175,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 120,
-                      height: 110,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                        child: Image(
-                          height:MediaQuery.of(context).size.height/20 ,
-                          width: MediaQuery.of(context).size.width/5.6,
-                          fit: BoxFit.cover,
-                          image: const NetworkImage(
-                            'https://picsum.photos/400/300',
-                          ),
-                        ),
-                      )),
-                  SizedBox(height: 3,),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(' Mac Bok ',style: TextStyle(fontWeight: FontWeight.bold,color: KAllWhite),),
-                      Text(' 122 \$ ',style: TextStyle(fontWeight: FontWeight.bold,color: KAllWhite),),
-
-                    ],
-                  ),
-                  SizedBox(height: 2,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    child: Text('lorem ipsum s my vafav cdfonorem ipsum s my  vafav cdfon',
-                      maxLines: 2,
-                      style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),),
-                  ),
-
-                ],
+            ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+              child: Image(
+                width: double.infinity,
+                height: 140,
+                fit: BoxFit.cover,
+                image: NetworkImage(e.image!),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0,bottom: 8,top: 4),
+              child: Text(
+                '${e.price}\$',
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.cyan),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                e.productTitle!,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
               ),
             ),
           ],
         ),
+      ),
     );
   }
 }

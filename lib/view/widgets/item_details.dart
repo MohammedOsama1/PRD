@@ -1,18 +1,23 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:prd/model/Item.dart';
 import 'package:prd/view/theme.dart';
 
-class ItemDetails extends StatefulWidget {
-  const ItemDetails({Key? key}) : super(key: key);
 
+class ItemDetails extends StatefulWidget {
+  const ItemDetails({Key? key,    this.item}) : super(key: key);
+  final  item ;
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
   int touchedIndex = -1;
+
   @override
   Widget build(BuildContext context) {
+    List<String> txt = widget.item.productTitle!.split(" ");
+    String title = txt.take(6).join(" ");
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
@@ -37,18 +42,22 @@ class _ItemDetailsState extends State<ItemDetails> {
                       color: KColor,
                     ),
                     Positioned(
-                        left: 30,
-                        top: 20,
-                        right: 30,
-                        child:  ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: const Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          'https://picsum.photos/400/300',
+                      left: 30,
+                      top: 20,
+                      right: 30,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: AspectRatio(
+                          aspectRatio: 1.5, // Adjust the aspect ratio as needed
+                          child: Image(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              widget.item.image!,
+                            ),
+                          ),
                         ),
                       ),
-                    ))
+                    )
                   ],
                 ),
               ),
@@ -57,8 +66,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
-                    const Text(
-                    "Great expensive item ",
+                     Text(
+                    title,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
@@ -68,12 +77,12 @@ class _ItemDetailsState extends State<ItemDetails> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "\$275 ",
+                         Text(
+                          "\EG ${widget.item.price} ",
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 40),
+                              fontSize: 38),
                         ),
                         const Spacer(),
                         Row(
@@ -103,8 +112,8 @@ class _ItemDetailsState extends State<ItemDetails> {
                           fontSize: 22),
                     ),
                     const SizedBox(height: 5,),
-                    const Text(
-                      "manufacturer's warranty for a product you can contact the manufacturer directly or visit their website for more information. Manufacturer's warranties may not apply in all cases, depending on factors like the use of the product, where the product was purchased, or who you purchased the product from. Please review the warranty carefully, and contact the manufacturer if you have any questions.",
+                     Text(
+                       widget.item.productTitle!,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -215,43 +224,54 @@ class _ItemDetailsState extends State<ItemDetails> {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 50.0 : 40.0;
+
       switch (i) {
         case 0:
+          double positivePercentage = double.parse(widget.item.positive!) /
+              double.parse(widget.item.reviewsNumber!.toString());
+          String positiveTitle = (positivePercentage * 100).toStringAsFixed(0);
+
           return PieChartSectionData(
-            value: 40,
-            title: '40%',
+            value: positivePercentage,
+            title: '$positiveTitle%',
             color: KColor,
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-                color: Colors.white
+              color: Colors.white,
             ),
           );
         case 1:
+          double negativePercentage = double.parse(widget.item.negative!) /
+              double.parse(widget.item.reviewsNumber!.toString());
+          String negativeTitle = (negativePercentage * 100).toStringAsFixed(0);
+
           return PieChartSectionData(
-            value: 30,
+            value: negativePercentage,
             color: Colors.red.shade700,
-            title: '30%',
+            title: '$negativeTitle%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.white
+              color: Colors.white,
             ),
           );
         case 2:
-          return PieChartSectionData(
-            value: 15,
-            color: Colors.yellow,
+          double neutralPercentage = double.parse(widget.item.neutral!) /
+              double.parse(widget.item.reviewsNumber!.toString());
+          String neutralTitle = (neutralPercentage * 100).toStringAsFixed(0);
 
-            title: '15%',
+          return PieChartSectionData(
+            value: neutralPercentage,
+            color: Colors.yellow,
+            title: '$neutralTitle%',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-                color: Colors.white
-
+              color: Colors.white,
             ),
           );
         default:
