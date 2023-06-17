@@ -4,14 +4,13 @@ import 'dart:math';
 import 'package:http/http.dart';
 import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
+import 'package:prd/model/user.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BLoC {
   final _ItemSubject = new BehaviorSubject<List<Item>>();
   Stream<List<Item>> get Itemz => _ItemSubject.stream;
   List <Item> item= [];
-
-  String token = '';
   Future<void> login(String email, String password,context) async {
       Response response = await post(
           Uri.parse("http://127.0.0.1:8000/api/auth/login"),
@@ -19,8 +18,7 @@ class BLoC {
       print(response.body);
       Map<String, dynamic> data = json.decode(response.body);
       if (response.statusCode == 200) {
-        token = data ['access_token'];
-        print(token);
+        user = UserData.fromJson(data) ;
         await getHomeData();
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LayoutScreen()), (route) => false);
       }
@@ -53,11 +51,15 @@ class BLoC {
       }
 
   }
+  Future<void> logOut(context) async {
+      await post(Uri.parse("http://127.0.0.1:8000/api/auth/logout"),headers: {"Authorization": "Bearer ${user.accessToken}"});
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LoginScreen()), (route) => false);
+  }
 
   Future<void> getHomeData() async {
 
       Response response = await get(
-          Uri.parse("http://127.0.0.1:8000/api/AllCategories"),headers: {"Authorization": "Bearer ${token}"});
+          Uri.parse("http://127.0.0.1:8000/api/AllCategories"),headers: {"Authorization": "Bearer ${user.accessToken}"});
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);
@@ -65,11 +67,8 @@ class BLoC {
         item = _Temp.map((e) => Item.fromJson(e)).toList();
         print(item.first);
         _ItemSubject.add(item);
-        _ItemSubject.kill();
       }
-      else {
 
-      }
 
   }
 }

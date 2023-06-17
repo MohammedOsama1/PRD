@@ -14,29 +14,24 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 25,),
 
             Icon(Icons.account_circle,color:KColor,size: 120,),
+            Text("Hello, ${user.user!.username!}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
             const SizedBox(height: 15,),
-
+            user.user!.id! > 6999?
             buildCard(txt:'Add/Edit Product',icon: Icons.edit,context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');
-
-            }),
+            }):Container(),
             const SizedBox(height: 30,),
-
-            buildCard(txt:'Language',icon: Icons.ac_unit,context: context,fun: (){
+            user.user!.id! > 6999? buildCard(txt:'Remove Product',icon: Icons.ac_unit,context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');
 
-            }),
+            }):Container(),
             const SizedBox(height: 30,),
-
             buildCard(txt:'DarkMode',icon: Icons.light_mode_outlined ,context: context ,fun: (){
               Navigator.pushNamed(context,'/editScreen');
 
             }),
             const SizedBox(height: 30,),
-
-            buildCard(txt:'Logout',icon: Icons.logout,context: context ,fun: (){
-              Navigator.pushNamed(context,'/editScreen');
-
+            buildCard(txt:'Logout',icon: Icons.logout,context: context ,fun: (){bloc.logOut(context);
             }),
 
           ],
