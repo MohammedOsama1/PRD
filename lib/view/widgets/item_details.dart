@@ -135,12 +135,25 @@ class _ItemDetailsState extends State<ItemDetails> {
                     const SizedBox(height: 5,),
                     const Divider(),
                     const SizedBox(height: 12,),
-                    Text(
-                      "Description",
-                      style: TextStyle(
-                          color: KColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22),
+                    Row(
+                      children: [
+                        Text(
+                          "Description",
+                          style: TextStyle(
+                              color: KColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 22),
+                        ),
+                        Spacer(),
+                        user.user!.id!>6999? IconButton(onPressed: (){
+                          showDialog(context: context, builder: (_)=>AlertDialog(
+                            content: Text('Are you sure you want to delete this item ?',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                            actions: [TextButton(onPressed: (){
+                              bloc.deleteItem(widget.item.iD,context).then((value) =>  Navigator.pop(context));
+                            }, child: Text('Ok',style: TextStyle(color: KColor,fontSize: 24),),)],
+                          ));
+                        }, icon: Icon(Icons.delete_forever,color: Colors.red,))
+                            :SizedBox(),],
                     ),
                     const SizedBox(height: 5,),
                      Text(
