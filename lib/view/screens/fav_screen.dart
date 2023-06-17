@@ -18,8 +18,6 @@ class FavoriteScreen extends StatelessWidget {
             },
             child: buildStack(context, e,pro),
           ),).toList()
-
-
         ,
       ),
     );
@@ -63,7 +61,6 @@ class FavoriteScreen extends StatelessWidget {
                                 Text('\EG${e.price}',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
                               ],
                             ),
-
                           ],
                         ),
                       )

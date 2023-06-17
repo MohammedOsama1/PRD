@@ -1,8 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
-import 'package:prd/view/theme.dart';
 
 
 class ItemDetails extends StatefulWidget {
@@ -14,12 +12,14 @@ class ItemDetails extends StatefulWidget {
 
 class _ItemDetailsState extends State<ItemDetails> {
   int touchedIndex = -1;
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
     List<String> txt = widget.item.productTitle!.split(" ");
     String title = txt.take(6).join(" ");
     final pro = Provider.of<FavProvider>(context);
+    final proCart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
@@ -103,15 +103,31 @@ class _ItemDetailsState extends State<ItemDetails> {
                         Row(
                           children:  [
                             const SizedBox(width: 20,),
-                            Container(color:KColor,child: Icon(Icons.add,size: 25,color: Colors.white,)),
-                            const Text(
-                              "  1  ",
+                            InkWell(
+                              onTap: (){
+                                setState(() {
+                                  quantity ++ ;
+                                  print(quantity);
+                                });
+
+                              },
+                                child: Container(color:KColor,child: Icon(Icons.add,size: 25,color: Colors.white,))),
+                             Text(
+                              "  $quantity  ",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 25),
                             ),
-                            Container(color:KColor,child: Icon(Icons.remove,size: 25,color: Colors.white,)),
+                            InkWell(
+                              onTap: (){
+                                setState(() {
+                                  quantity > 1 ? quantity -- : print("");
+
+                                });
+
+                              },
+                                child: Container(color:KColor,child: Icon(Icons.remove,size: 25,color: Colors.white,))),
                           ],
                         ),
                       ],
@@ -213,16 +229,20 @@ class _ItemDetailsState extends State<ItemDetails> {
                       ),
                     ),
                     const SizedBox(height: 80,),
-                    Container(
-                      height: 50,
-                      width: double.infinity,
-                      decoration:BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color:KColor
-                      ) ,
-                    child: Center(child: Text('Add To Cart',style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),)),)
-
-
+                    InkWell(
+                      onTap: (){
+                        proCart.addToCart(widget.item,quantity);
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 50,
+                        width: double.infinity,
+                        decoration:BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color:KColor
+                        ) ,
+                      child: Center(child: Text('Add To Cart',style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),)),),
+                    )
                   ],
                 ),
               ),
