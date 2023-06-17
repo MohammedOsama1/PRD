@@ -78,26 +78,6 @@ class ItemsBasedCat extends StatelessWidget {
               ),
             ),
 
-            Positioned(
-                right: 15,
-                top: 26,
-                child: Container(
-                    width: 40,
-                    height: 40,
-                    margin: EdgeInsets.all(8),
-                    decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                            bottomLeft: Radius.circular(30),
-                            bottomRight: Radius.circular(30)),
-                        color: KColor),
-                    child: const Icon(
-                      Icons.favorite,
-                      size: 22,
-
-                      color: Colors.white,
-                    )))
           ],
         ),
       );

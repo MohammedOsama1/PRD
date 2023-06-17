@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
 import 'package:prd/view/theme.dart';
 
@@ -18,11 +19,26 @@ class _ItemDetailsState extends State<ItemDetails> {
   Widget build(BuildContext context) {
     List<String> txt = widget.item.productTitle!.split(" ");
     String title = txt.take(6).join(" ");
+    final pro = Provider.of<FavProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
         backgroundColor:KColor,
         elevation: 0,
+        actions: [IconButton(
+            onPressed: (){
+              pro.addRemToFav(widget.item);
+            },
+            icon: pro.FavList.contains(widget.item) ? Icon(
+              Icons.favorite,
+              size: 22,
+              color: Colors.white,
+            ) :Icon(
+              Icons.favorite_border_outlined,
+              size: 22,
+              color: Colors.white,
+            ))
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -35,7 +51,6 @@ class _ItemDetailsState extends State<ItemDetails> {
                 width: MediaQuery.of(context).size.width,
                 child: Stack(
                   children: [
-
                     Container(
                       height: MediaQuery.of(context).size.height / 5,
                       width: MediaQuery.of(context).size.width,

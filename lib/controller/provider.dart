@@ -57,6 +57,11 @@ class CartProvider extends ChangeNotifier {
 }
 
 class FavProvider extends ChangeNotifier {
-
+  List<Item> FavList = [];
+  addRemToFav(Item item){
+    print(FavList);
+    FavList.contains(item)? FavList.remove(item) :FavList.add(item);
+    notifyListeners();
+}
 
 }

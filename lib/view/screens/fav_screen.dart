@@ -1,3 +1,4 @@
+import 'package:prd/model/Item.dart';
 import 'package:prd/view/widgets/item_details.dart';
 
 import '../../controller/ex_file.dart';
@@ -7,87 +8,89 @@ class FavoriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final pro = Provider.of<MyProvider>(context);
-
-    List em = List.generate(20, (index) => 'null');
+    final pro = Provider.of<FavProvider>(context);
     return SingleChildScrollView(
       child: Column(
         children:
-          em.map((e) =>  InkWell(
+        pro.FavList.map((e) =>  InkWell(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails(item: bloc.item.first,)));
+              Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails(item: e,)));
             },
-            child: Stack(
-              children: [
-                Container(width: MediaQuery.of(context).size.width,
-                  height:  MediaQuery.of(context).size.height/7,
-                  padding: const EdgeInsets.all(10.0),
-                  child: Card(
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 10,),
-                        Image(
-                          height:MediaQuery.of(context).size.height/11 ,
-                          width: MediaQuery.of(context).size.width/4.6,
-                          fit: BoxFit.cover,
-                          image: const NetworkImage(
-                            'https://picsum.photos/400/300',
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:MainAxisAlignment.spaceAround,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text('item one example',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: KAllWhite)),
-                                    ],
-                                  ),
-                                  const Text('Phones',style: TextStyle(fontSize: 16,color: Colors.grey)),
-                                  Text('\$16',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
-                                ],
-                              ),
-
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-
-                Positioned(
-                    right: 15,
-                    top: 26,
-                    child: Container(
-                        width: 40,
-                        height: 40,
-                        margin: EdgeInsets.all(8),
-                        decoration:  BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30)),
-                            color: KColor),
-                        child: const Icon(
-                          Icons.favorite,
-                          size: 22,
-
-                          color: Colors.white,
-                        )))
-              ],
-            ),
+            child: buildStack(context, e,pro),
           ),).toList()
 
 
         ,
       ),
     );
+  }
+
+  Stack buildStack(BuildContext context, Item e,pro) {
+    List<String> txt = e.productTitle!.split(" ");
+    String title = txt.take(3).join(" ");
+    return Stack(
+            children: [
+              Container(width: MediaQuery.of(context).size.width,
+                height:  MediaQuery.of(context).size.height/7,
+                padding: const EdgeInsets.all(10.0),
+                child: Card(
+                  color: Colors.white,
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 10,),
+                      Image(
+                        height:MediaQuery.of(context).size.height/11 ,
+                        width: MediaQuery.of(context).size.width/4.6,
+                        fit: BoxFit.cover,
+                        image:  NetworkImage(
+                          e.image!,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment:MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(title,maxLines:2,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: KAllWhite)),
+                                  ],
+                                ),
+                                Text(txt.take(5).join(" "),style: TextStyle(fontSize: 12,color: Colors.grey)),
+                                Text('\EG${e.price}',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
+                              ],
+                            ),
+
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                  right: 15,
+                  top: 26,
+                  child: GestureDetector(
+                    onTap: ()=> pro.addRemToFav(e)
+                    ,
+                    child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: EdgeInsets.all(8),
+                        decoration:  BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: KColor),
+                        child: const Icon(
+                          Icons.favorite,
+                          size: 22,
+                          color: Colors.white,
+                        )),
+                  ))
+            ],
+          );
   }
 }
