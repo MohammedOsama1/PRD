@@ -18,8 +18,12 @@ class MyProvider extends ChangeNotifier {
     currentIndex = index;
     notifyListeners();
   }
-}
 
+  bool isDark = true;
+  void changeTheme(){
+    isDark= !isDark;
+    notifyListeners();
+}}
 
 class HomeProvider extends ChangeNotifier {
 
@@ -85,11 +89,6 @@ class CartProvider extends ChangeNotifier {
     return sum;
   }
 }
-
-
-
-
-
 
 class FavProvider extends ChangeNotifier {
   List<Item> FavList = [];

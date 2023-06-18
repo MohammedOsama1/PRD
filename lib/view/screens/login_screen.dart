@@ -8,8 +8,9 @@ class LoginScreen extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<MyProvider>(context);
     return Scaffold(
-
+      backgroundColor: pro.isDark? KAllBlack : AllWhite,
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -47,7 +48,7 @@ class LoginScreen extends StatelessWidget {
                         DefaultTTF(
                             controller: emailController,
                             label: 'Enter Your Email',
-                            prefixIcon: const Icon(Icons.email_outlined)),
+                            prefixIcon:  Icon(Icons.email_outlined ,color:pro.isDark?  AllWhite :KAllBlack),color:  pro.isDark?  AllWhite :KAllBlack  ,),
                         const SizedBox(
                           height: 20,
                         ),
@@ -55,12 +56,13 @@ class LoginScreen extends StatelessWidget {
                           controller: passwordController,
                           label: 'Enter Your Password',
                           obscureText: true,
-                          prefixIcon: const Icon(Icons.lock),
+                          color:  pro.isDark?  AllWhite :KAllBlack ,
+                          prefixIcon:  Icon(Icons.lock , color:pro.isDark?  AllWhite :KAllBlack),
                           suffixIcon: IconButton(
                             onPressed: () {
                             },
                             icon: true
-                                ? const Icon(Icons.visibility_outlined)
+                                ?  Icon(Icons.visibility_outlined ,color: pro.isDark?  AllWhite :KAllBlack,)
                                 : const Icon(Icons.visibility_off_outlined),
                           ),
                         ),
@@ -94,9 +96,9 @@ class LoginScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Don\'t have an account?',
+                             Text('Don\'t have an account?',
                                 style: TextStyle(
-                                    fontSize: 18, color: Colors.black54)),
+                                    fontSize: 18, color: pro.isDark ? AllWhite :KAllBlack )),
                             InkWell(
                               onTap: () {
                                 Navigator.pushNamed(context, '/register');

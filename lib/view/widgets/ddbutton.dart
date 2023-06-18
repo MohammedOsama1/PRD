@@ -20,7 +20,7 @@ class DefaultButton extends StatelessWidget {
           child: Center(
             child: Text(
               label,
-              style: const TextStyle(color: Colors.white,fontSize: 22),
+              style:  TextStyle(color: AllWhite,fontSize: 22),
             ),
           ),
         ));

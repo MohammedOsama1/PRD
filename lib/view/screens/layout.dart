@@ -11,14 +11,14 @@ class LayoutScreen extends StatelessWidget {
     final pro = Provider.of<MyProvider>(context);
     return  Scaffold(
       appBar:AppBar(
-        title:  Text(pro.screenTitles[pro.currentIndex],style: TextStyle(color: Colors.white),),
+        title:  Text(pro.screenTitles[pro.currentIndex],style: TextStyle(color: AllWhite),),
         actions: [IconButton(onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder: (_)=>SearchScreen()));
 
-        }, icon: Icon(Icons.search,color: Colors.white,))],
+        }, icon: Icon(Icons.search,color: AllWhite,))],
         backgroundColor: KColor,
       ) ,
-      backgroundColor: KCBackground,
+      backgroundColor: pro.isDark?  KAllBlack :AllWhite,
 
       body: pro.screens[pro.currentIndex],
       bottomNavigationBar: BottomNavigationBar(

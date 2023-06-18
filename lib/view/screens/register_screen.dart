@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:prd/view/theme.dart';
+import 'package:prd/controller/ex_file.dart';
 import 'package:prd/view/widgets/txtFF.dart';
-
 import '../widgets/ddbutton.dart';
 
 
@@ -15,12 +13,16 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<MyProvider>(context);
+
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: KColor,
         title: Text('Register Screen'),
       ),
-      backgroundColor: Colors.white,
+        backgroundColor: pro.isDark? KAllBlack : AllWhite,
+
       body: Container(
         height: double.infinity,
         width: double.infinity,
@@ -36,38 +38,40 @@ class RegisterScreen extends StatelessWidget {
                 children: [
                   Image.asset('assets/1.jpeg',height: 300,),
                   DefaultTTF(
+                  color:pro.isDark?  AllWhite :KAllBlack,
                       controller: nameController,
                       label: 'Enter Your Name',
                       prefixIcon:
-                      const Icon(Icons.verified_user_outlined)),
+                       Icon(Icons.verified_user_outlined ,color:pro.isDark?  AllWhite :KAllBlack,)),
                   const SizedBox(
                     height: 20,
                   ),
                   DefaultTTF(
+                    color:pro.isDark?  AllWhite :KAllBlack,
                     controller: phoneController,
                     label: 'Enter Your Phone',
-                    prefixIcon: const Icon(Icons.phone),
+                    prefixIcon:  Icon(Icons.phone,color:pro.isDark?  AllWhite :KAllBlack,),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   DefaultTTF(
+                      color:pro.isDark?  AllWhite :KAllBlack,
                       controller: emailController,
                       label: 'Enter Your Email',
-                      prefixIcon: const Icon(Icons.email_outlined)),
+                      prefixIcon:  Icon(Icons.email_outlined,color:pro.isDark?  AllWhite :KAllBlack,)),
                   const SizedBox(
                     height: 20,
                   ),
                   DefaultTTF(
+                    color:pro.isDark?  AllWhite :KAllBlack,
                     controller: passwordController,
                     label: 'Enter Your Password',
-                    // obscureText: LoginCubit.get(context).showPassword,
-                    prefixIcon: const Icon(Icons.lock),
+                    prefixIcon:  Icon(Icons.lock,color:pro.isDark?  AllWhite :KAllBlack,),
                     suffixIcon: IconButton(
                       onPressed: () {
-                        // LoginCubit.get(context).hidePassword();
                       },
-                      icon: const Icon(Icons.visibility_outlined)
+                      icon:  Icon(Icons.visibility_outlined,color:pro.isDark?  AllWhite :KAllBlack,)
 
                     ),
                   ),

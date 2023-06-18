@@ -12,6 +12,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final pro = Provider.of<HomeProvider>(context);
+    final pro2 = Provider.of<MyProvider>(context);
     List<String> _slideImages = [
       'https://picsum.photos/1200/800?random=1',
       'https://picsum.photos/1200/800?random=2',
@@ -27,7 +28,6 @@ class HomeScreen extends StatelessWidget {
       CategoryModelItem(name: 'Phones', Icon: Icons.phone_android,num: 6),
     ];
     return SingleChildScrollView(
-
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,15 +76,13 @@ class HomeScreen extends StatelessWidget {
                 margin: EdgeInsets.symmetric(horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: pro.currentSlideIndex == index
-                      ? Colors.blue
-                      : Colors.grey,
+                  color: pro.currentSlideIndex == index ? Colors.blue : Colors.grey,
                 ),
               );
             }).toList(),
           ),
           SizedBox(height: 10),
-          Text('  Category',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: KAllWhite),),
+          Text('  Category',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23,color: pro2.isDark?  AllWhite :KAllBlack,),),
           SizedBox(height: 10,),
           SingleChildScrollView(
              scrollDirection: Axis.horizontal,
@@ -99,9 +97,9 @@ class HomeScreen extends StatelessWidget {
                        decoration: BoxDecoration(color: KColor,borderRadius: BorderRadius.circular(15)),
                        child: IconButton(onPressed: (){
                          Navigator.push(context, MaterialPageRoute(builder: (_)=>ItemsBasedCat(CatName:e.name, Catid: e.num,)));
-                       }, icon: Icon(e.Icon,color: Colors.white,size: 30,))),
+                       }, icon: Icon(e.Icon,color: AllWhite,size: 30,))),
                    SizedBox(height: 5,),
-                   Text(e.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: KAllWhite),)
+                   Text(e.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,color: pro2.isDark?  AllWhite :KAllBlack,),)
                  ],
                ),
              ),).toList()
@@ -111,7 +109,7 @@ class HomeScreen extends StatelessWidget {
            Divider(),
            Row(
              children: [
-               Text('   Great Offers',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: KAllWhite),),
+               Text('   Great Offers',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: pro2.isDark?  AllWhite :KAllBlack,),),
                Spacer(),
                Text('  See All   ',style: TextStyle(fontWeight: FontWeight.bold,color: KColor),),
 
@@ -132,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                      mainAxisSpacing: 20,
                      crossAxisSpacing: 10,
                      childAspectRatio: 0.76,
-                     children: snapshot.data!.map((e) => buildOneItem(e,context)).toList(),
+                     children: snapshot.data!.map((e) => buildOneItem(e,context,pro2)).toList(),
                    );
                  } else if (snapshot.hasError) {
                    return Text('Error: ${snapshot.error}');
@@ -149,7 +147,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  GestureDetector buildOneItem(Item e, context) {
+  GestureDetector buildOneItem(Item e, context,pro2) {
     List<String> txt = e.productTitle!.split(" ");
     String title = txt.take(3).join(" ");
 
@@ -161,7 +159,7 @@ class HomeScreen extends StatelessWidget {
         width: 140,
         height: 230,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: pro2.isDark?  Colors.white12:AllWhite,
           borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
@@ -190,7 +188,8 @@ class HomeScreen extends StatelessWidget {
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16,          color: pro2.isDark?  Colors.white:Colors.black,
+                ),
               ),
             ),
             Padding(
@@ -206,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                 e.productTitle!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
+                style: TextStyle(fontWeight: FontWeight.bold,  color: pro2.isDark?  Colors.white:Colors.black,),
               ),
             ),
           ],

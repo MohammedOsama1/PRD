@@ -9,17 +9,19 @@ class ItemsBasedCat extends StatelessWidget {
  final int Catid ;
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<MyProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(CatName),
         backgroundColor: KColor,
       ),
+      backgroundColor: pro.isDark?KAllBlack:AllWhite,
       body: SingleChildScrollView(
         child: StreamBuilder(
           stream: bloc.Itemz,
           builder: (context, snapshot) {
             return Column(
-              children: snapshot.data!.where((element) => element.catId == Catid).map((e) =>  buildInkWell(context, e),).toList()
+              children: snapshot.data!.where((element) => element.catId == Catid).map((e) =>  buildInkWell(context, e,pro),).toList()
             );
           }
         ),
@@ -27,7 +29,7 @@ class ItemsBasedCat extends StatelessWidget {
     );
   }
 
-  InkWell buildInkWell(BuildContext context, Item e) {
+  InkWell buildInkWell(BuildContext context, Item e,pro) {
     List<String> txt = e.productTitle!.split(" ");
     String title = txt.take(3).join(" ");
     return InkWell(
@@ -40,7 +42,7 @@ class ItemsBasedCat extends StatelessWidget {
               height:  MediaQuery.of(context).size.height/7,
               padding: const EdgeInsets.all(10.0),
               child: Card(
-                color: Colors.white,
+                color: pro.isDark?Colors.white30:AllWhite,
                 child: Row(
                   children: [
                     const SizedBox(width: 10,),
@@ -62,10 +64,10 @@ class ItemsBasedCat extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  Text(title,maxLines:2,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: KAllWhite)),
+                                  Text(title,maxLines:2,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: pro.isDark?AllWhite:KAllBlack,)),
                                 ],
                               ),
-                               Text(txt.take(5).join(" "),style: TextStyle(fontSize: 12,color: Colors.grey)),
+                               Text(txt.take(5).join(" "),style: TextStyle(fontSize: 12,color: pro.isDark?AllWhite:Colors.grey)),
                               Text('\EG${e.price}',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
                             ],
                           ),

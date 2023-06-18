@@ -7,17 +7,19 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pro = Provider.of<CartProvider>(context);
+    final pro2 = Provider.of<MyProvider>(context);
 
     return Column(
       children: [
         Container(
           height: MediaQuery.of(context).size.height/1.5,
           child: SingleChildScrollView(
-            child: Column(children: pro.cartList.map((e) => _buildIte(context,e,pro)).toList(),),
+            child: Column(children: pro.cartList.map((e) => _buildIte(context,e,pro,pro2)).toList(),),
           ),
         ),
         Card(
           elevation: 10,
+         color: pro2.isDark?  Colors.white30 :AllWhite,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -32,18 +34,18 @@ class CategoryScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Row(
                     children: [
-                      Text('  total Items',style: TextStyle(fontSize: 20),),
+                      Text('  total Items',style: TextStyle(fontSize: 20,color: pro2.isDark?  Colors.white :KAllBlack,),),
                       Spacer(),
-                      Text(pro.sumTotalPec().toString(),style: TextStyle(fontSize: 18),),
+                      Text(pro.sumTotalPec().toString(),style: TextStyle(fontSize: 18,color: pro2.isDark?  Colors.white :KAllBlack,),),
                     ],
                   ),
                 ),
                 Divider(),
                 Row(
                   children: [
-                    Text('  total price',style: TextStyle(fontSize: 20),),
+                    Text('  total price',style: TextStyle(fontSize: 20,color: pro2.isDark?  Colors.white :KAllBlack,),),
                     Spacer(),
-                    Text(' ${pro.sumTotalPrice() } EG ',style: TextStyle(fontSize: 18),),
+                    Text(' ${pro.sumTotalPrice() } EG ',style: TextStyle(fontSize: 18,color: pro2.isDark?  Colors.white :KAllBlack,),),
                   ],
                 ),
                 SizedBox(height: 10,),
@@ -55,13 +57,13 @@ class CategoryScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: KColor,
                       borderRadius: BorderRadius.circular(20)),
-                  child: const Center(
+                  child:  Center(
                     child: Text(
                       'Checkout',
                       style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                          color: AllWhite),
                     ),
                   ),
                 )
@@ -72,7 +74,7 @@ class CategoryScreen extends StatelessWidget {
       ],
     );
   }
-  Stack _buildIte(BuildContext context,e,pro) {
+  Stack _buildIte(BuildContext context,e,pro,pro2) {
     List<String> txt = e.productTitle!.split(" ");
     String title = txt.take(1).join(" ");
     return Stack(
@@ -82,6 +84,7 @@ class CategoryScreen extends StatelessWidget {
                 height:  MediaQuery.of(context).size.height/7,
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
+                  color: pro2.isDark?  Colors.white30 :AllWhite,
                   child: Row(
                     children: [
                       const SizedBox(width: 10,),
@@ -109,11 +112,12 @@ class CategoryScreen extends StatelessWidget {
                               children: [
                                  Row(
                                    children: [
-                                     Text(title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+                                     Text(title,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,  color: pro2.isDark?  Colors.white :Colors.black,)),
                                    ],
                                  ),
-                                 Text(e.category,style: TextStyle(fontSize: 16,color: Colors.grey)),
-                                Text('\EG${e.price}',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
+                                 Text(e.category,style: TextStyle(fontSize: 16                ,  color: pro2.isDark?  Colors.white :Colors.black,
+                                 )),
+                                Text('\EG${e.price}',style: TextStyle(fontWeight: FontWeight.w600, color: pro2.isDark?  Colors.blue :KColor),),
                               ],
                             ),
                             SizedBox(width: 100,),

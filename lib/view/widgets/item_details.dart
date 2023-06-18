@@ -3,10 +3,10 @@ import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
 import 'package:prd/view/screens/add_product.dart';
 
-
 class ItemDetails extends StatefulWidget {
-  const ItemDetails({Key? key,    required this.item}) : super(key: key);
-  final Item item ;
+  const ItemDetails({Key? key, required this.item}) : super(key: key);
+  final Item item;
+
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
 }
@@ -20,33 +20,37 @@ class _ItemDetailsState extends State<ItemDetails> {
     List<String> txt = widget.item.productTitle!.split(" ");
     String title = txt.take(6).join(" ");
     final pro = Provider.of<FavProvider>(context);
+    final pro2 = Provider.of<MyProvider>(context);
     final proCart = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
-        backgroundColor:KColor,
+        backgroundColor: KColor,
         elevation: 0,
-        actions: [IconButton(
-            onPressed: (){
-              pro.addRemToFav(widget.item);
-            },
-            icon: pro.FavList.contains(widget.item) ? Icon(
-              Icons.favorite,
-              size: 22,
-              color: Colors.white,
-            ) :Icon(
-              Icons.favorite_border_outlined,
-              size: 22,
-              color: Colors.white,
-            ))
+        actions: [
+          IconButton(
+              onPressed: () {
+                pro.addRemToFav(widget.item);
+              },
+              icon: pro.FavList.contains(widget.item)
+                  ? Icon(
+                      Icons.favorite,
+                      size: 22,
+                      color: AllWhite,
+                    )
+                  : Icon(
+                      Icons.favorite_border_outlined,
+                      size: 22,
+                      color: AllWhite,
+                    ))
         ],
       ),
+      backgroundColor: pro2.isDark ? KAllBlack : AllWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width,
@@ -81,63 +85,78 @@ class _ItemDetailsState extends State<ItemDetails> {
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-
-                     Text(
-                    title,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 22),
-                  ),
-                    const SizedBox(height: 5,),
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                          color: pro2.isDark ? AllWhite : KAllBlack,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 22),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(
+                        Text(
                           "\EG ${widget.item.price} ",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: pro2.isDark ? AllWhite : KAllBlack,
                               fontWeight: FontWeight.bold,
                               fontSize: 38),
                         ),
                         const Spacer(),
                         Row(
-                          children:  [
-                            const SizedBox(width: 20,),
+                          children: [
+                            const SizedBox(
+                              width: 20,
+                            ),
                             InkWell(
-                              onTap: (){
-                                setState(() {
-                                  quantity ++ ;
-                                  print(quantity);
-                                });
-
-                              },
-                                child: Container(color:KColor,child: Icon(Icons.add,size: 25,color: Colors.white,))),
-                             Text(
+                                onTap: () {
+                                  setState(() {
+                                    quantity++;
+                                    print(quantity);
+                                  });
+                                },
+                                child: Container(
+                                    color: KColor,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 25,
+                                      color: AllWhite,
+                                    ))),
+                            Text(
                               "  $quantity  ",
                               style: TextStyle(
-                                  color: Colors.black,
+                                  color: pro2.isDark ? AllWhite : KAllBlack,
                                   fontWeight: FontWeight.w500,
                                   fontSize: 25),
                             ),
                             InkWell(
-                              onTap: (){
-                                setState(() {
-                                  quantity > 1 ? quantity -- : print("");
-
-                                });
-
-                              },
-                                child: Container(color:KColor,child: Icon(Icons.remove,size: 25,color: Colors.white,))),
+                                onTap: () {
+                                  setState(() {
+                                    quantity > 1 ? quantity-- : print("");
+                                  });
+                                },
+                                child: Container(
+                                    color: KColor,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 25,
+                                      color: AllWhite,
+                                    ))),
                           ],
                         ),
-
                       ],
                     ),
-                    const SizedBox(height: 5,),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     const Divider(),
-                    const SizedBox(height: 12,),
+                    const SizedBox(
+                      height: 12,
+                    ),
                     Row(
                       children: [
                         Text(
@@ -148,36 +167,84 @@ class _ItemDetailsState extends State<ItemDetails> {
                               fontSize: 22),
                         ),
                         Spacer(),
-                        user.user!.id!>6999? IconButton(onPressed: (){
-                         Navigator.push(context, MaterialPageRoute(builder: (_)=> AddProductScreen(item: widget.item,)));
-                        }, icon: Icon(Icons.edit,color: Colors.red,)) :SizedBox(),
-                        SizedBox(width: 12,),
-                        user.user!.id!>6999? IconButton(onPressed: (){
-                          showDialog(context: context, builder: (_)=>AlertDialog(
-                            content: Text('Are you sure you want to delete this item ?',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                            actions: [TextButton(onPressed: (){
-                              bloc.deleteItem(widget.item.iD,context).then((value) =>  Navigator.pop(context));
-                            }, child: Text('Ok',style: TextStyle(color: KColor,fontSize: 24),),)],
-                          ));
-                        }, icon: Icon(Icons.delete_forever,color: Colors.red,)) :SizedBox(),
+                        user.user!.id! > 6999
+                            ? IconButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => AddProductScreen(
+                                                item: widget.item,
+                                              )));
+                                },
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Colors.red,
+                                ))
+                            : SizedBox(),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        user.user!.id! > 6999
+                            ? IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                            content: Text(
+                                              'Are you sure you want to delete this item ?',
+                                              style: TextStyle(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  bloc
+                                                      .deleteItem(
+                                                          widget.item.iD,
+                                                          context)
+                                                      .then((value) =>
+                                                          Navigator.pop(
+                                                              context));
+                                                },
+                                                child: Text(
+                                                  'Ok',
+                                                  style: TextStyle(
+                                                      color: KColor,
+                                                      fontSize: 24),
+                                                ),
+                                              )
+                                            ],
+                                          ));
+                                },
+                                icon: Icon(
+                                  Icons.delete_forever,
+                                  color: Colors.red,
+                                ))
+                            : SizedBox(),
                       ],
                     ),
-                    const SizedBox(height: 5,),
-                     Text(
-                       widget.item.productTitle!,
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      widget.item.productTitle!,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        height: 1.5,
-
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 20),
+                          height: 1.5,
+                          color: pro2.isDark ? AllWhite : Colors.grey,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20),
                     ),
-                    const SizedBox(height: 17,),
+                    const SizedBox(
+                      height: 17,
+                    ),
                     const Divider(),
-
-                    const SizedBox(height: 17,),
+                    const SizedBox(
+                      height: 17,
+                    ),
                     Text(
                       "Rates",
                       style: TextStyle(
@@ -193,41 +260,43 @@ class _ItemDetailsState extends State<ItemDetails> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children:  <Widget>[
+                            children: <Widget>[
                               indicator(
+                                pro2: pro2,
                                 color: Colors.red.shade700,
                                 text: ' Positive',
-
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               indicator(
+                                pro2: pro2,
                                 color: Colors.yellow,
                                 text: ' neutral',
-
                               ),
                               const SizedBox(
                                 height: 8,
                               ),
                               indicator(
+                                pro2: pro2,
                                 color: KColor,
                                 text: ' Negative',
-
                               ),
-
-                            ],),
+                            ],
+                          ),
                           Spacer(),
                           AspectRatio(
                             aspectRatio: 1.4,
                             child: PieChart(
                               PieChartData(
                                 pieTouchData: PieTouchData(
-                                  touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                                  touchCallback:
+                                      (FlTouchEvent event, pieTouchResponse) {
                                     setState(() {
                                       if (!event.isInterestedForInteractions ||
                                           pieTouchResponse == null ||
-                                          pieTouchResponse.touchedSection == null) {
+                                          pieTouchResponse.touchedSection ==
+                                              null) {
                                         touchedIndex = -1;
                                         return;
                                       }
@@ -241,40 +310,48 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 ),
                                 sectionsSpace: 0,
                                 centerSpaceRadius: 40,
-                                sections: showingSections(),
+                                sections: showingSections(pro2),
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 80,),
+                    const SizedBox(
+                      height: 80,
+                    ),
                     InkWell(
-                      onTap: (){
-                        proCart.addToCart(widget.item,quantity);
+                      onTap: () {
+                        proCart.addToCart(widget.item, quantity);
                         Navigator.pop(context);
                       },
                       child: Container(
                         height: 50,
                         width: double.infinity,
-                        decoration:BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color:KColor
-                        ) ,
-                      child: Center(child: Text('Add To Cart',style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),)),),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: KColor),
+                        child: Center(
+                            child: Text(
+                          'Add To Cart',
+                          style: TextStyle(
+                              color: AllWhite,
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold),
+                        )),
+                      ),
                     )
                   ],
                 ),
               ),
-
-
             ],
           ),
         ),
       ),
     );
   }
-  List<PieChartSectionData> showingSections() {
+
+  List<PieChartSectionData> showingSections(pro2) {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
@@ -335,7 +412,7 @@ class _ItemDetailsState extends State<ItemDetails> {
     });
   }
 
-  Row indicator({required color, required String text}) {
+  Row indicator({required color, required String text, required pro2}) {
     return Row(
       children: [
         Container(
@@ -343,7 +420,14 @@ class _ItemDetailsState extends State<ItemDetails> {
           width: 20,
           height: 20,
         ),
-        Text(text,style: const TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: pro2.isDark ? AllWhite : KAllBlack,
+          ),
+        ),
       ],
     );
   }
@@ -352,4 +436,3 @@ class _ItemDetailsState extends State<ItemDetails> {
 // RiveAnimation.network(
 //           'https://cdn.rive.app/animations/vehicles.riv',
 //         ),
-

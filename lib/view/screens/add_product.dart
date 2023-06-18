@@ -3,6 +3,8 @@ import 'package:prd/model/Item.dart';
 import 'package:prd/view/theme.dart';
 import 'package:prd/view/widgets/txtFF.dart';
 
+import '../../controller/ex_file.dart';
+
 class AddProductScreen extends StatefulWidget {
   AddProductScreen({Key? key, this.item}) : super(key: key);
   final Item? item ;
@@ -66,6 +68,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final pro = Provider.of<MyProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,6 +77,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         ),
         backgroundColor: KColor,
       ),
+      backgroundColor: pro.isDark? KAllBlack : AllWhite,
       body: SingleChildScrollView(
           child: Form(
         key: formKey,
@@ -86,58 +91,68 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 height: 30,
               ),
               DefaultTTF(
+                color:  pro.isDark?  AllWhite :KAllBlack,
                   label: ' title',
                   controller: titleCont,
-                  prefixIcon: const Icon(Icons.title)),
+                  prefixIcon:  Icon(Icons.title,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 25,
               ),
               DefaultTTF(
+                  color:  pro.isDark?  AllWhite :KAllBlack,
                   label: 'price',
                   controller: priceCont,
-                  prefixIcon: const Icon(Icons.attach_money)),
+                  prefixIcon:  Icon(Icons.attach_money,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 25,
               ),
               DefaultTTF(
+                  color:pro.isDark?  AllWhite :KAllBlack,
                   label: ' description',
                   controller: descriptionCont,
-                  prefixIcon: const Icon(Icons.description_outlined)),
+                  prefixIcon:  Icon(Icons.description_outlined ,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 25,
               ),
               DefaultTTF(
+                  color:  pro.isDark?  AllWhite :KAllBlack,
                   label: ' Link of image',
                   controller: imgUrlCont,
-                  prefixIcon: const Icon(Icons.image_outlined)),
+                  prefixIcon:  Icon(Icons.image_outlined,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 25,
               ),
               DefaultTTF(
+                  color: pro.isDark?  AllWhite :KAllBlack,
+
                   label: 'Neural',
                   controller: NeuralCont,
-                  prefixIcon: const Icon(Icons.mood)),
+                  prefixIcon:  Icon(Icons.mood,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 15,
               ),
               DefaultTTF(
+                  color: pro.isDark?  AllWhite :KAllBlack,
+
                   label: 'Negative',
                   controller: NegativeCont,
-                  prefixIcon: const Icon(Icons.mood_bad_sharp)),
+                  prefixIcon:  Icon(Icons.mood_bad_sharp,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 15,
               ),
               DefaultTTF(
+                  color: pro.isDark?  AllWhite :KAllBlack,
                   label: 'Postive',
                   controller: PostiveCont,
-                  prefixIcon: const Icon(Icons.mood_outlined)),
+                  prefixIcon:  Icon(Icons.mood_outlined,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(
                 height: 25,
               ),
               DefaultTTF(
+                color:pro.isDark?  AllWhite :KAllBlack,
                 label: 'selectedCategory',
                 controller: selectedcont,
-                prefixIcon: const Icon(Icons.turned_in_outlined),
+                prefixIcon:  Icon(Icons.turned_in_outlined,color: pro.isDark?  AllWhite :KAllBlack,),
                 suffixIcon: DropdownButton(
                   underline: Container(
                     height: 0,
@@ -196,7 +211,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       child: Text(
                         widget.item== null?'Add Product':'Edit Product',
                     style: TextStyle(
-                        color: Colors.white,
+                        color: AllWhite,
                         fontSize: 30,
                         fontWeight: FontWeight.bold),
                   )),

@@ -9,6 +9,7 @@ class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pro = Provider.of<FavProvider>(context);
+    final pro2 = Provider.of<MyProvider>(context);
     return SingleChildScrollView(
       child: Column(
         children:
@@ -16,14 +17,14 @@ class FavoriteScreen extends StatelessWidget {
             onTap: (){
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ItemDetails(item: e,)));
             },
-            child: buildStack(context, e,pro),
+            child: buildStack(context, e,pro,pro2),
           ),).toList()
         ,
       ),
     );
   }
 
-  Stack buildStack(BuildContext context, Item e,pro) {
+  Stack buildStack(BuildContext context, Item e,pro,pro2) {
     List<String> txt = e.productTitle!.split(" ");
     String title = txt.take(3).join(" ");
     return Stack(
@@ -32,8 +33,8 @@ class FavoriteScreen extends StatelessWidget {
                 height:  MediaQuery.of(context).size.height/7,
                 padding: const EdgeInsets.all(10.0),
                 child: Card(
-                  color: Colors.white,
-                  child: Row(
+    color: pro2.isDark?  Colors.white38 :Colors.white,
+    child: Row(
                     children: [
                       const SizedBox(width: 10,),
                       Image(
@@ -54,11 +55,11 @@ class FavoriteScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Text(title,maxLines:2,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: KAllWhite)),
+                                    Text(title,maxLines:2,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: pro2.isDark?  AllWhite :KAllBlack,)),
                                   ],
                                 ),
-                                Text(txt.take(5).join(" "),style: TextStyle(fontSize: 12,color: Colors.grey)),
-                                Text('\EG${e.price}',style: TextStyle(color: KColor,fontWeight: FontWeight.w600),),
+                                Text(txt.take(5).join(" "),style: TextStyle(fontSize: 12,color: pro2.isDark?  AllWhite :KAllBlack,)),
+                                Text('\EG${e.price}',style: TextStyle(fontWeight: FontWeight.w600,color: pro2.isDark?  AllWhite :KColor,),),
                               ],
                             ),
                           ],
@@ -81,10 +82,10 @@ class FavoriteScreen extends StatelessWidget {
                         decoration:  BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             color: KColor),
-                        child: const Icon(
+                        child:  Icon(
                           Icons.favorite,
                           size: 22,
-                          color: Colors.white,
+                          color: AllWhite,
                         )),
                   ))
             ],
