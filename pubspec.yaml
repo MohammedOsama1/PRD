@@ -41,7 +41,6 @@ dependencies:
   provider:
   fl_chart: ^0.61.0
   carousel_slider:
-  modal_progress_hud_nsn:
   rxdart:
   http:
 

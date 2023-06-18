@@ -147,6 +147,60 @@ class BLoC {
     }
   }
 
+
+  Future<void> upDateItem({
+    required Item item,
+    required int id,
+    required String Category,
+    required String productTitle,
+    required int price,
+    required int Negative,
+    required int Positive,
+    required int Neutral,
+    String imgUrl =
+    'https://static.pexels.com/photos/36753/flower-purple-lical-blosso.jpg',
+    required int cat_id,
+    required context,
+  }) async {
+    Response response = await post(
+      Uri.parse("http://127.0.0.1:8000/api/Categoriesupdate$id"),
+      body: {
+        'ID':id.toString(),
+        'Category': Category,
+        'productTitle': productTitle,
+        'Price': price.toString(),
+        'ProductRate': item.productRate.toString(),
+        'countryOfOrigin': item.countryOfOrigin.toString(),
+        'Manufacturer': item.manufacturer.toString(),
+        'ReviewsNumber': (Neutral + Positive + Negative).toString(),
+        'Neutral': Neutral.toString(),
+        'Positive': Positive.toString(),
+        'Negative': Negative.toString(),
+        'cat_id': cat_id.toString(),
+        'image': imgUrl,
+      },
+      headers: {
+        "Authorization": "Bearer ${user.accessToken}",
+      },
+    );
+    print(response.body);
+    print(id);
+    if (response.statusCode == 201) {
+
+      getHomeData();
+      await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            content: Text(
+              'Item updated Successful',
+              style: TextStyle(color: KColor),
+            ),
+            title: Text('Done :)'),
+          ));
+      Navigator.pop(context);
+    }
+  }
+
 }
 
 extension on BehaviorSubject {

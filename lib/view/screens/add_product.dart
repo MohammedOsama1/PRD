@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:prd/model/Item.dart';
 import 'package:prd/view/theme.dart';
 import 'package:prd/view/widgets/txtFF.dart';
 
 class AddProductScreen extends StatefulWidget {
-  AddProductScreen({Key? key}) : super(key: key);
+  AddProductScreen({Key? key, this.item}) : super(key: key);
+  final Item? item ;
 
   @override
   State<AddProductScreen> createState() => _AddProductScreenState();
@@ -40,11 +42,34 @@ class _AddProductScreenState extends State<AddProductScreen> {
   ];
 
   @override
+  void initState() {
+    if (widget.item!= null )
+      {
+         titleCont.text = widget.item!.productTitle! ;
+
+         priceCont.text = widget.item!.price!.toString() ;
+
+         descriptionCont.text = widget.item!.productTitle!;
+
+         category.text = widget.item!.category!;
+
+         imgUrlCont.text = widget.item!.image!;
+
+         selectedcont.text = widget.item!.category!;
+
+         NeuralCont.text = widget.item!.neutral!;
+         NegativeCont.text = widget.item!.negative!;
+         PostiveCont.text = widget.item!.positive!;
+      }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add new item',
+          widget.item== null?'Add New Product':'Edit Product',
         ),
         backgroundColor: KColor,
       ),
@@ -137,6 +162,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               GestureDetector(
                 onTap: () {
                   if (formKey.currentState!.validate()) {
+                    widget.item== null?
                     bloc.addNewItem(
                         Category: selectedCategory,
                         productTitle: titleCont.text,
@@ -145,7 +171,18 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         Positive:int.parse( PostiveCont.text),
                         Neutral: int.parse(NeuralCont.text),
                         imgUrl: imgUrlCont.text,
-                        cat_id: getNumberFromString(selectedCategory),context: context);
+                        cat_id: getNumberFromString(selectedCategory),context: context)
+                        :
+                    bloc.upDateItem(
+                      item: widget.item!,
+                        Category: selectedCategory,
+                        productTitle: titleCont.text,
+                        price: int.parse(priceCont.text),
+                        Negative:int.parse( NegativeCont.text),
+                        Positive:int.parse( PostiveCont.text),
+                        Neutral: int.parse(NeuralCont.text),
+                        imgUrl: imgUrlCont.text,
+                        cat_id: getNumberFromString(selectedCategory),context: context, id: widget.item!.iD!);
 
                   }
                 },
@@ -157,7 +194,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       color: KColor, borderRadius: BorderRadius.circular(16)),
                   child: Center(
                       child: Text(
-                    'Add Product',
+                        widget.item== null?'Add Product':'Edit Product',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,

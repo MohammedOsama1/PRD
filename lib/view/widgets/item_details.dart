@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:prd/controller/ex_file.dart';
 import 'package:prd/model/Item.dart';
+import 'package:prd/view/screens/add_product.dart';
 
 
 class ItemDetails extends StatefulWidget {
@@ -81,6 +82,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
+
                      Text(
                     title,
                     style: TextStyle(
@@ -130,6 +132,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                 child: Container(color:KColor,child: Icon(Icons.remove,size: 25,color: Colors.white,))),
                           ],
                         ),
+
                       ],
                     ),
                     const SizedBox(height: 5,),
@@ -146,14 +149,18 @@ class _ItemDetailsState extends State<ItemDetails> {
                         ),
                         Spacer(),
                         user.user!.id!>6999? IconButton(onPressed: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (_)=> AddProductScreen(item: widget.item,)));
+                        }, icon: Icon(Icons.edit,color: Colors.red,)) :SizedBox(),
+                        SizedBox(width: 12,),
+                        user.user!.id!>6999? IconButton(onPressed: (){
                           showDialog(context: context, builder: (_)=>AlertDialog(
                             content: Text('Are you sure you want to delete this item ?',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
                             actions: [TextButton(onPressed: (){
                               bloc.deleteItem(widget.item.iD,context).then((value) =>  Navigator.pop(context));
                             }, child: Text('Ok',style: TextStyle(color: KColor,fontSize: 24),),)],
                           ));
-                        }, icon: Icon(Icons.delete_forever,color: Colors.red,))
-                            :SizedBox(),],
+                        }, icon: Icon(Icons.delete_forever,color: Colors.red,)) :SizedBox(),
+                      ],
                     ),
                     const SizedBox(height: 5,),
                      Text(

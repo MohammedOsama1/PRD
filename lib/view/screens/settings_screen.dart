@@ -6,8 +6,8 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(width: 50,),
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children:  [
@@ -20,11 +20,7 @@ class SettingsScreen extends StatelessWidget {
             buildCard(txt:'Add Product',icon: Icons.edit,context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');
             }):Container(),
-            const SizedBox(height: 30,),
-            user.user!.id! > 6999? buildCard(txt:'Edit Product',icon: Icons.ac_unit,context: context,fun: (){
-              Navigator.pushNamed(context,'/editScreen');
 
-            }):Container(),
             const SizedBox(height: 30,),
             buildCard(txt:'DarkMode',icon: Icons.light_mode_outlined ,context: context ,fun: (){
               Navigator.pushNamed(context,'/editScreen');
