@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           unselectedIconTheme: const IconThemeData(size: 26),
           selectedIconTheme:const IconThemeData(size: 30) ,
           selectedLabelStyle: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
-
           backgroundColor: Colors.white10
         )
       ),

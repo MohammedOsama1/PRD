@@ -17,11 +17,11 @@ class SettingsScreen extends StatelessWidget {
             Text("Hello, ${user.user!.username!}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),
             const SizedBox(height: 15,),
             user.user!.id! > 6999?
-            buildCard(txt:'Add/Edit Product',icon: Icons.edit,context: context,fun: (){
+            buildCard(txt:'Add Product',icon: Icons.edit,context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');
             }):Container(),
             const SizedBox(height: 30,),
-            user.user!.id! > 6999? buildCard(txt:'Remove Product',icon: Icons.ac_unit,context: context,fun: (){
+            user.user!.id! > 6999? buildCard(txt:'Edit Product',icon: Icons.ac_unit,context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');
 
             }):Container(),

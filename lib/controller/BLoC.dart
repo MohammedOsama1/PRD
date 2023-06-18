@@ -146,6 +146,7 @@ class BLoC {
       Navigator.pop(context);
     }
   }
+
 }
 
 extension on BehaviorSubject {
