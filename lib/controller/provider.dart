@@ -23,7 +23,15 @@ class MyProvider extends ChangeNotifier {
   void changeTheme(){
     isDark= !isDark;
     notifyListeners();
-}}
+}
+
+  bool passwordState = false ;
+  void showPassword () {
+    passwordState != passwordState;
+    notifyListeners(); }
+
+
+}
 
 class HomeProvider extends ChangeNotifier {
 
@@ -54,6 +62,9 @@ class HomeProvider extends ChangeNotifier {
 
 
 }
+
+
+
 
 class CartProvider extends ChangeNotifier {
   List<Item> cartList = [];

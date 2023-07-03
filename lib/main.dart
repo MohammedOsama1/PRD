@@ -4,6 +4,7 @@ import 'controller/ex_file.dart';
 import 'view/screens/add_product.dart';
 import 'view/screens/register_screen.dart';
 void main() async  {
+  WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   if  (await CacheHelper.getData('isDark') == null) {
     CacheHelper.addData('isDark', false.toString());
@@ -50,6 +51,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-// 0062d1
-//007dfe
+
 

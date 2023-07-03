@@ -97,9 +97,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         height: 30,
       ),
       index == 1
-          ? InkWell(
+          ? GestureDetector(
               onTap: () {
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>LoginScreen()), (route) => false);
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                 CacheHelper.addData('onState', 'passed');
               },
               child: Container(

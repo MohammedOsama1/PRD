@@ -26,18 +26,46 @@ class DefaultTTF extends StatelessWidget {
       controller: controller,
       style: TextStyle(color: color),
       validator: (val) {
+        if (label == "Enter Your Email") {
+          final pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$';
+          final regExp = RegExp(pattern);
+
+          if (val!.isEmpty) {
+            return 'Email cannot be empty';
+          } else if (!regExp.hasMatch(val)) {
+            return 'Invalid email format';
+          }
+        }
+        if (label == "Enter Your Password") {
+          if (val!.isEmpty) {
+            return 'Password cannot be empty';
+          } else if (val.length < 6) {
+            return 'Password must have at least 6 characters';
+          }
+        }
+
         if (val!.isEmpty) {
           return 'It cannot be empty';
         }
-
         if ((label == "Neural" ||
-                label == "Negative" ||
-                label == "Postive" ||
-                label == "price") &&
-            !(int.tryParse(val!) != null)) {
+            label == "Negative" ||
+            label == "Positive" ||
+            label == "Enter Your Phone" ||
+            label == "Price") &&
+            !(int.tryParse(val) != null)) {
           return 'Please enter a valid integer';
         }
+
+        return null;
       },
+        keyboardType: label == "Enter Your Email"
+            ? TextInputType.emailAddress
+            : (label == "Neural" ||
+            label == "Negative" ||
+            label == "Positive" ||
+            label == "Price")
+            ? TextInputType.number
+            : TextInputType.text,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: color),

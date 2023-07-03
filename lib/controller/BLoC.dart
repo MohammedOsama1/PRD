@@ -7,6 +7,9 @@ import 'package:prd/model/Item.dart';
 import 'package:prd/model/user.dart';
 import 'package:rxdart/rxdart.dart';
 
+import '../view/widgets/loading_ind.dart';
+String api = 'http://10.0.2.2:8000';
+
 class BLoC {
   final _ItemSubject = new BehaviorSubject<List<Item>>();
 
@@ -14,30 +17,42 @@ class BLoC {
   List<Item> item = [];
 
   Future<void> login(String email, String password, context) async {
-    Response response = await post(
-        Uri.parse("http://127.0.0.1:8000/api/auth/login"),
-        body: {'email': email, 'password': password});
-    print(response.body);
-    Map<String, dynamic> data = json.decode(response.body);
-    if (response.statusCode == 200) {
-      user = UserData.fromJson(data);
-      await getHomeData();
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => LayoutScreen()), (route) => false);
-    } else {
+    showLoadingDialog(context);
+    try {
+      Response response = await post(Uri.parse("$api/api/auth/login"), body: {'email': email, 'password': password});
+      print(response.body);
+      Map<String, dynamic> data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        user = UserData.fromJson(data);
+        await getHomeData().then((value) =>Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()))
+        );
+      } else {
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text('Please check your email or password'),
+              title: Text('Error'),
+            ));
+      }
+    } catch (e) {
+      print(e);
       await showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                content: Text('Please check your email or password'),
-                title: Text('Error'),
-              ));
+            content: Text('Error in network. Please try again later.'),
+            title: Text('Network Error'),
+          ));
+    } finally {
+      Navigator.pop(context);
     }
   }
 
   Future<void> register(
       String name, String email, String password, String phone, context) async {
+    showLoadingDialog(context);
+
     Response response =
-        await post(Uri.parse("http://127.0.0.1:8000/api/auth/register"), body: {
+        await post(Uri.parse("$api/api/auth/register"), body: {
       'id': Random().nextInt(1000).toString(),
       'username': name,
       'password': password,
@@ -53,8 +68,7 @@ class BLoC {
                 content: Text('you had registered successfully'),
                 title: Text('Thanks'),
               ));
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } else {
       await showDialog(
           context: context,
@@ -66,15 +80,14 @@ class BLoC {
   }
 
   Future<void> logOut(context) async {
-    await post(Uri.parse("http://127.0.0.1:8000/api/auth/logout"),
+    await post(Uri.parse("$api/api/auth/logout"),
         headers: {"Authorization": "Bearer ${user.accessToken}"});
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
   Future<void> getHomeData() async {
     Response response = await get(
-        Uri.parse("http://127.0.0.1:8000/api/AllCategories"),
+        Uri.parse("$api/api/AllCategories"),
         headers: {"Authorization": "Bearer ${user.accessToken}"});
 
     if (response.statusCode == 200) {
@@ -99,7 +112,7 @@ class BLoC {
     required context,
   }) async {
     Response response = await post(
-      Uri.parse("http://127.0.0.1:8000/api/CategoriesInsertion"),
+      Uri.parse("$api/api/CategoriesInsertion"),
       body: {
         'id': Random().nextInt(100000).toString(),
         'Category': Category,
@@ -137,13 +150,13 @@ class BLoC {
 
   Future<void> deleteItem(ID, context) async {
     Response response = await post(
-        Uri.parse("http://127.0.0.1:8000/api/Categoriesdelete"),
+        Uri.parse("$api/api/Categoriesdelete"),
         body: {'ID':ID.toString()},
         headers: {"Authorization": "Bearer ${user.accessToken}"});
     print(response.body);
     if (response.statusCode == 200) {
       getHomeData();
-      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
     }
   }
 
@@ -163,7 +176,7 @@ class BLoC {
     required context,
   }) async {
     Response response = await post(
-      Uri.parse("http://127.0.0.1:8000/api/Categoriesupdate$id"),
+      Uri.parse("$api/api/Categoriesupdate$id"),
       body: {
         'ID':id.toString(),
         'Category': Category,
@@ -197,7 +210,7 @@ class BLoC {
             ),
             title: Text('Done :)'),
           ));
-      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
     }
   }
 
