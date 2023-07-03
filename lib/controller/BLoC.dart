@@ -15,6 +15,7 @@ class BLoC {
 
   Stream<List<Item>> get Itemz => _ItemSubject.stream;
   List<Item> item = [];
+  List<favs> favIds = [];
 
   Future<void> login(String email, String password, context) async {
     showLoadingDialog(context);
@@ -212,6 +213,25 @@ class BLoC {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
     }
   }
+  Future<void> getUserFav() async {
+    Response response = await get(Uri.parse("$api/wishlist/${user.user!.id!}"), headers: {"Authorization": "Bearer ${user.accessToken}"});
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = json.decode(response.body);
+      List<dynamic> _Temp = data['data'];
+      favIds = _Temp.map((e) => favs.fromJson(e)).toList();
+      print("favIds");
+      print(favIds);
+    }
+  }
+
+
+  Future<void> addItemToFav(int productId) async {
+    Response response = await post(Uri.parse("$api/WishListInsertion"), body: {
+    'userId':'${user.user!.id!}','product-id':productId.toString(),'cat-id':"0",},
+        headers: {"Authorization": "Bearer ${user.accessToken}"});
+    if (response.statusCode == 200) {
+    }
+  }
 
 }
 
@@ -220,5 +240,15 @@ extension on BehaviorSubject {
     this.sink;
     this.close();
     this.drain();
+  }
+}
+class favs {
+  int? userId;
+
+  favs(
+      {this.userId,});
+
+  favs.fromJson(Map<String, dynamic> json) {
+    userId = json['user-id'];
   }
 }
