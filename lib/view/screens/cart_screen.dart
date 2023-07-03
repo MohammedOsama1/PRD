@@ -11,10 +11,11 @@ class CategoryScreen extends StatelessWidget {
 
     return Column(
       children: [
-        Container(
-          height: MediaQuery.of(context).size.height/1.5,
-          child: SingleChildScrollView(
-            child: Column(children: pro.cartList.map((e) => _buildIte(context,e,pro,pro2)).toList(),),
+        Expanded(
+          child: Container(
+            child: SingleChildScrollView(
+              child: Column(children: pro.cartList.map((e) => _buildIte(context,e,pro,pro2)).toList(),),
+            ),
           ),
         ),
         Card(

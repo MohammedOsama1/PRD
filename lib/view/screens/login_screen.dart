@@ -55,15 +55,14 @@ class LoginScreen extends StatelessWidget {
                         DefaultTTF(
                           controller: passwordController,
                           label: 'Enter Your Password',
-                          obscureText: true,
+                          obscureText: pro.passwordState ? true :false,
                           color:  pro.isDark?  AllWhite :KAllBlack ,
                           prefixIcon:  Icon(Icons.lock , color:pro.isDark?  AllWhite :KAllBlack),
                           suffixIcon: IconButton(
                             onPressed: () {
+                              pro.showPassword();
                             },
-                            icon: true
-                                ?  Icon(Icons.visibility_outlined ,color: pro.isDark?  AllWhite :KAllBlack,)
-                                : const Icon(Icons.visibility_off_outlined),
+                            icon: !pro.passwordState ?  Icon(Icons.visibility_outlined ,color: Colors.grey,) : const Icon(Icons.visibility_off_outlined,color: Colors.grey,),
                           ),
                         ),
                         const SizedBox(

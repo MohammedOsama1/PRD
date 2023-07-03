@@ -27,7 +27,7 @@ class MyProvider extends ChangeNotifier {
 
   bool passwordState = false ;
   void showPassword () {
-    passwordState != passwordState;
+    passwordState = !passwordState;
     notifyListeners(); }
 
 

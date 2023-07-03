@@ -24,7 +24,7 @@ class BLoC {
       Map<String, dynamic> data = json.decode(response.body);
       if (response.statusCode == 200) {
         user = UserData.fromJson(data);
-        await getHomeData().then((value) =>Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()))
+        await getHomeData().then((value) =>Navigator.pushNamedAndRemoveUntil(context, '/layout', (route) => false)
         );
       } else {
         await showDialog(
@@ -80,8 +80,7 @@ class BLoC {
   }
 
   Future<void> logOut(context) async {
-    await post(Uri.parse("$api/api/auth/logout"),
-        headers: {"Authorization": "Bearer ${user.accessToken}"});
+    await post(Uri.parse("$api/api/auth/logout"), headers: {"Authorization": "Bearer ${user.accessToken}"});
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 

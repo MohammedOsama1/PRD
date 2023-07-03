@@ -133,5 +133,5 @@ List<OnBoardingModel> dataList = [
       'Find out what others have said about what you intend to buy ',
       'assets/1.jpeg'),
   OnBoardingModel('your shopping has just begun ...',
-      'so tell us what are you       looking for ?', 'assets/2.jpeg'),
+      'so tell us what are you looking for ?', 'assets/2.jpeg'),
 ];

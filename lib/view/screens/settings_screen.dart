@@ -27,7 +27,9 @@ class SettingsScreen extends StatelessWidget {
               pro.changeTheme();
             }),
             const SizedBox(height: 30,),
-            buildCard(pro: pro,txt:'Logout',icon: Icons.logout,context: context ,fun: (){bloc.logOut(context);
+            buildCard(pro: pro,txt:'Logout',icon: Icons.logout,context: context ,fun: (){
+              pro.currentIndex = 0;
+              bloc.logOut(context);
             }),
 
           ],
