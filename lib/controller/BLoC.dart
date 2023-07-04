@@ -94,9 +94,9 @@ class BLoC {
       Map<String, dynamic> data = json.decode(response.body);
       List<dynamic> _Temp = data['data'];
       item = _Temp.map((e) => Item.fromJson(e)).toList();
-      print(item.first);
       _ItemSubject.add(item);
     }
+    getUserFav();
   }
 
   Future<void> addNewItem({
@@ -149,14 +149,13 @@ class BLoC {
   }
 
   Future<void> deleteItem(ID, context) async {
-    Response response = await post(
-        Uri.parse("$api/api/Categoriesdelete"),
-        body: {'ID':ID.toString()},
-        headers: {"Authorization": "Bearer ${user.accessToken}"});
-    print(response.body);
+    Response response = await post(Uri.parse("$api/api/CateDelete"), body: {'id':ID.toString()}, headers: {"Authorization": "Bearer ${user.accessToken}"});
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      getHomeData();
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+      showLoadingDialog(context);
+      await getHomeData().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()))
+      );
+
     }
   }
 
@@ -213,8 +212,11 @@ class BLoC {
       Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
     }
   }
-  Future<void> getUserFav() async {
-    Response response = await get(Uri.parse("$api/wishlist/${user.user!.id!}"), headers: {"Authorization": "Bearer ${user.accessToken}"});
+
+  Future getUserFav() async {
+    print("//////////////////////////////////////////////////////////////////////////////////////////////////////////");
+    Response response = await get(Uri.parse('$api/api/getWish/${user.user!.id!}'), headers: {"Authorization": "Bearer ${user.accessToken}"});
+    print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       List<dynamic> _Temp = data['data'];
@@ -226,11 +228,11 @@ class BLoC {
 
 
   Future<void> addItemToFav(int productId) async {
-    Response response = await post(Uri.parse("$api/WishListInsertion"), body: {
-    'userId':'${user.user!.id!}','product-id':productId.toString(),'cat-id':"0",},
+    Response response = await post(Uri.parse("$api/api/WishListInsertion"), body: {
+    'user-id':'${user.user!.id!}','product-id':"$productId",'cat-id':"0",},
         headers: {"Authorization": "Bearer ${user.accessToken}"});
-    if (response.statusCode == 200) {
-    }
+    print(response.statusCode);
+
   }
 
 }

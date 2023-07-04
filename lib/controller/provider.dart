@@ -16,6 +16,7 @@ class MyProvider extends ChangeNotifier {
 
  void changeBottomNavBar(index) {
     currentIndex = index;
+    bloc.addItemToFav(2);
     notifyListeners();
   }
 
@@ -102,10 +103,11 @@ class CartProvider extends ChangeNotifier {
 }
 
 class FavProvider extends ChangeNotifier {
-  List<Item> FavList = [];
+  List<Item> FavList = bloc.item.where((item) => bloc.favIds.contains(item.iD)).toList();
   addRemToFav(Item item){
     print(FavList);
     FavList.contains(item)? FavList.remove(item) :FavList.add(item);
+    bloc.addItemToFav(item.iD!);
     notifyListeners();
 }
 

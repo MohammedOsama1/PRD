@@ -200,13 +200,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
-                                                  bloc
-                                                      .deleteItem(
-                                                          widget.item.iD,
-                                                          context)
-                                                      .then((value) =>
-                                                          Navigator.pop(
-                                                              context));
+                                                  bloc.deleteItem(widget.item.iD,context).then((value) =>pro.addRemToFav(bloc.item.firstWhere((item) => bloc.favIds.contains(item.iD))));
                                                 },
                                                 child: Text(
                                                   'Ok',
