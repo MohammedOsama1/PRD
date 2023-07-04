@@ -8,7 +8,8 @@ import 'package:prd/model/user.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../view/widgets/loading_ind.dart';
-String api = 'http://10.0.2.2:8000';
+// String api = 'http://10.0.2.2:8000';
+String api = 'http://172.0.18.3:8000';
 
 class BLoC {
   final _ItemSubject = new BehaviorSubject<List<Item>>();
@@ -54,10 +55,10 @@ class BLoC {
 
     Response response =
         await post(Uri.parse("$api/api/auth/register"), body: {
-      'id': Random().nextInt(1000).toString(),
-      'username': name,
+      'name': name,
       'password': password,
       'email': email,
+      'userType': "user",
       'phone': phone
     });
     print(response.body);
@@ -71,13 +72,22 @@ class BLoC {
               ));
       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } else {
+      if (response.statusCode == 409)  {
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: Text("this email is already registered"),
+              title: Text('Error'),
+            )).then((value) => Navigator.pop(context));
+      }else {
       await showDialog(
           context: context,
           builder: (context) => AlertDialog(
                 content: Text('Please check your data'),
                 title: Text('Error'),
-              ));
-    }
+              )).then((value) => Navigator.pop(context));
+    }}
+
   }
 
   Future<void> logOut(context) async {
@@ -153,6 +163,7 @@ class BLoC {
     print(response.statusCode);
     if (response.statusCode == 200) {
       showLoadingDialog(context);
+
       await getHomeData().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()))
       );
 
@@ -215,7 +226,7 @@ class BLoC {
 
   Future getUserFav() async {
     print("//////////////////////////////////////////////////////////////////////////////////////////////////////////");
-    Response response = await get(Uri.parse('$api/api/getWish/${user.user!.id!}'), headers: {"Authorization": "Bearer ${user.accessToken}"});
+    Response response = await get(Uri.parse('$api/api/getWish/${user.id!}'), headers: {"Authorization": "Bearer ${user.accessToken}"});
     print(response.statusCode);
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
@@ -229,7 +240,7 @@ class BLoC {
 
   Future<void> addItemToFav(int productId) async {
     Response response = await post(Uri.parse("$api/api/WishListInsertion"), body: {
-    'user-id':'${user.user!.id!}','product-id':"$productId",'cat-id':"0",},
+    'user-id':'${user.id!}','product-id':"$productId",'cat-id':"0",},
         headers: {"Authorization": "Bearer ${user.accessToken}"});
     print(response.statusCode);
 

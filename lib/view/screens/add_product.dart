@@ -100,7 +100,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               ),
               DefaultTTF(
                   color:  pro.isDark?  AllWhite :KAllBlack,
-                  label: 'price',
+                  label: 'Price',
                   controller: priceCont,
                   prefixIcon:  Icon(Icons.attach_money,color: pro.isDark?  AllWhite :KAllBlack,)),
               SizedBox(

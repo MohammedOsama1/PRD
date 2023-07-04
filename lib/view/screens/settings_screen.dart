@@ -14,9 +14,9 @@ class SettingsScreen extends StatelessWidget {
           children:  [
             const SizedBox(height: 25,),
             Icon(Icons.account_circle,color:pro.isDark?  AllWhite :KColor,size: 120,),
-            Text("Hello, ${user.user!.username!}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: pro.isDark?  AllWhite :KAllBlack),),
+            Text("Hello, ${user.name!}",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30,color: pro.isDark?  AllWhite :KAllBlack),),
             const SizedBox(height: 15,),
-            user.user!.id! > 6999?
+            user.userType == "admin"?
             buildCard(txt:'Add Product',icon: Icons.edit,
                 pro:pro, context: context,fun: (){
               Navigator.pushNamed(context,'/editScreen');

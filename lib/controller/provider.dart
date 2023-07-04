@@ -16,11 +16,10 @@ class MyProvider extends ChangeNotifier {
 
  void changeBottomNavBar(index) {
     currentIndex = index;
-    bloc.addItemToFav(2);
     notifyListeners();
   }
 
-  bool isDark = true;
+  bool isDark = false;
   void changeTheme(){
     isDark= !isDark;
     notifyListeners();
@@ -63,9 +62,6 @@ class HomeProvider extends ChangeNotifier {
 
 
 }
-
-
-
 
 class CartProvider extends ChangeNotifier {
   List<Item> cartList = [];
@@ -110,5 +106,9 @@ class FavProvider extends ChangeNotifier {
     bloc.addItemToFav(item.iD!);
     notifyListeners();
 }
+  del(item){
+    FavList.remove(item);
+    notifyListeners();
+  }
 
 }

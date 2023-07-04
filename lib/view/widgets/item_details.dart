@@ -167,7 +167,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                               fontSize: 22),
                         ),
                         Spacer(),
-                        user.user!.id! > 6999
+                        user.userType == "admin"
                             ? IconButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -185,7 +185,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                         SizedBox(
                           width: 12,
                         ),
-                        user.user!.id! > 6999
+                        user.userType == "admin"
                             ? IconButton(
                                 onPressed: () {
                                   showDialog(
@@ -200,7 +200,9 @@ class _ItemDetailsState extends State<ItemDetails> {
                                             actions: [
                                               TextButton(
                                                 onPressed: () {
-                                                  bloc.deleteItem(widget.item.iD,context).then((value) =>pro.addRemToFav(bloc.item.firstWhere((item) => bloc.favIds.contains(item.iD))));
+                                                  bloc.deleteItem(widget.item.iD,context);
+                                                  pro.del(widget.item);
+                                                  proCart.removeFromCart(widget.item);
                                                 },
                                                 child: Text(
                                                   'Ok',
