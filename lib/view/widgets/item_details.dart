@@ -260,7 +260,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                               indicator(
                                 pro2: pro2,
                                 color: Colors.red.shade700,
-                                text: ' Positive',
+                                text: ' Negative',
                               ),
                               const SizedBox(
                                 height: 8,
@@ -276,7 +276,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                               indicator(
                                 pro2: pro2,
                                 color: KColor,
-                                text: ' Negative',
+                                text: ' Positive',
                               ),
                             ],
                           ),

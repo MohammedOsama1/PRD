@@ -188,14 +188,14 @@ class HomeScreen extends StatelessWidget {
                 title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16,          color: pro2.isDark?  Colors.white:Colors.black,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16,color: pro2.isDark?  Colors.white:Colors.black,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0,bottom: 8,top: 4),
               child: Text(
-                '${e.price}\$',
+                '${e.price} EG',
                 style: TextStyle(fontWeight: FontWeight.bold, color: Colors.cyan),
               ),
             ),
