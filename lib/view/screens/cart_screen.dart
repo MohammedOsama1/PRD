@@ -25,7 +25,7 @@ class CategoryScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
-              height:MediaQuery.of(context).size.height/6,
+              height:MediaQuery.of(context).size.height/6+10,
               width: MediaQuery.of(context).size.width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,21 +50,27 @@ class CategoryScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 10,),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 1, horizontal: 40),
-                  width: MediaQuery.of(context).size.width/2.5,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      color: KColor,
-                      borderRadius: BorderRadius.circular(20)),
-                  child:  Center(
-                    child: Text(
-                      'Checkout',
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: AllWhite),
+                GestureDetector(
+                  onTap: () async{
+
+                    pro.clearList(context);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 1, horizontal: 40),
+                    width: MediaQuery.of(context).size.width/2.5,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        color: KColor,
+                        borderRadius: BorderRadius.circular(20)),
+                    child:  Center(
+                      child: Text(
+                        'Checkout',
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: AllWhite),
+                      ),
                     ),
                   ),
                 )

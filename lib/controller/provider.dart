@@ -1,6 +1,8 @@
 
 
+
 import 'package:prd/model/Item.dart';
+import 'package:prd/view/widgets/loading_ind.dart';
 
 import 'ex_file.dart';
 
@@ -25,7 +27,7 @@ class MyProvider extends ChangeNotifier {
     notifyListeners();
 }
 
-  bool passwordState = false ;
+  bool passwordState = true ;
   void showPassword () {
     passwordState = !passwordState;
     notifyListeners(); }
@@ -72,6 +74,29 @@ class CartProvider extends ChangeNotifier {
     quantities.add(quantity);
     notifyListeners();
   }
+  void ccc() {
+
+    cartList.clear();
+    quantities.clear();
+    notifyListeners();
+  }
+  void clearList(ctx) async{
+    if(cartList.isNotEmpty) {
+      await showDialog(
+      context: ctx,
+      builder: (context) => AlertDialog(
+        content: Text(
+          'Items Placed Successful',
+          style: TextStyle(color: KColor),
+        ),
+        title: Text('Done :)'),
+      ));
+      cartList.clear();
+      quantities.clear();
+      notifyListeners();
+    }
+
+  }
 
   void removeFromCart(Item item) {
     final index = cartList.indexOf(item);
@@ -99,10 +124,20 @@ class CartProvider extends ChangeNotifier {
 }
 
 class FavProvider extends ChangeNotifier {
-  List<Item> FavList = bloc.item.where((item) => bloc.favIds.contains(item.iD)).toList();
-  addRemToFav(Item item){
+
+
+
+  List<Item> FavList = bloc.item.where((item) => bloc.favIds.where((element) => element.product_Id! == item.iD!).isNotEmpty ).toList();
+
+  init(context) {
+    if(bloc.item.where((item) => bloc.favIds.where((element) => element.product_Id! == item.iD!).isNotEmpty ).toList().isNotEmpty) {
+      FavList = bloc.item.where((item) => bloc.favIds.where((element) => element.product_Id! == item.iD!).isNotEmpty ).toList();
+    }
     print(FavList);
-    FavList.contains(item)? FavList.remove(item) :FavList.add(item);
+  }
+  addRemToFav(Item item){
+    print(bloc.favIds.length);
+    FavList.contains(item)? FavList.remove(item) : FavList.add(item);
     bloc.addItemToFav(item.iD!);
     notifyListeners();
 }
@@ -110,5 +145,6 @@ class FavProvider extends ChangeNotifier {
     FavList.remove(item);
     notifyListeners();
   }
+
 
 }

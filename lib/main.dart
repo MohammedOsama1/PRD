@@ -1,15 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:prd/controller/save_helper.dart';
 
+import 'controller/badCertificateHandler.dart';
 import 'controller/ex_file.dart';
 import 'view/screens/add_product.dart';
 import 'view/screens/register_screen.dart';
 void main() async  {
+  HttpOverrides.global = new DevHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
-  await CacheHelper.init();
-  if  (await CacheHelper.getData('isDark') == null) {
-    CacheHelper.addData('isDark', false.toString());
-  }
   runApp(
       MultiProvider(
         providers: [
@@ -36,15 +36,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
- String toBoarding =  CacheHelper.getData('onState');
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+ // String toBoarding =  CacheHelper.getData('onState');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       darkTheme: Themes.customDark,
       theme: Themes.customLight,
       themeMode: CacheHelper.getData('isDark') == 'true' ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: toBoarding == "passed" ? '/login' :'/onBoard',
+      initialRoute: '/onBoard',
       routes: {
         '/onBoard' : (context)=>const OnBoardingScreen(),
         '/login' :(context) => LoginScreen(),

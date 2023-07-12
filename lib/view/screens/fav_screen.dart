@@ -1,5 +1,6 @@
 import 'package:prd/model/Item.dart';
 import 'package:prd/view/widgets/item_details.dart';
+import 'package:prd/view/widgets/loading_ind.dart';
 
 import '../../controller/ex_file.dart';
 

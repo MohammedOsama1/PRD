@@ -9,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../view/widgets/loading_ind.dart';
 // String api = 'http://10.0.2.2:8000';
-String api = 'http://172.0.18.3:8000';
+String api = 'https://osama.codelyticaleg.com';
 
 class BLoC {
   final _ItemSubject = new BehaviorSubject<List<Item>>();
@@ -91,7 +91,10 @@ class BLoC {
   }
 
   Future<void> logOut(context) async {
-    await post(Uri.parse("$api/api/auth/logout"), headers: {"Authorization": "Bearer ${user.accessToken}"});
+    showLoadingDialog(context);
+    favIds.clear();
+
+    await post(Uri.parse("$api/api/auth/logout"), headers: {"Authorization": "Bearer ${user.accessToken}"}).then((value) => user = UserData());
     Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
   }
 
@@ -121,6 +124,7 @@ class BLoC {
     required int cat_id,
     required context,
   }) async {
+    showLoadingDialog(context);
     Response response = await post(
       Uri.parse("$api/api/CategoriesInsertion"),
       body: {
@@ -153,19 +157,18 @@ class BLoC {
                   style: TextStyle(color: KColor),
                 ),
                 title: Text('Done :)'),
-              ));
-      Navigator.pop(context);
+              )).then((value) =>       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LayoutScreen()), (route) => false)
+      );
     }
   }
 
   Future<void> deleteItem(ID, context) async {
+    showLoadingDialog(context);
     Response response = await post(Uri.parse("$api/api/CateDelete"), body: {'id':ID.toString()}, headers: {"Authorization": "Bearer ${user.accessToken}"});
     print(response.statusCode);
     if (response.statusCode == 200) {
-      showLoadingDialog(context);
 
-      await getHomeData().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()))
-      );
+      await getHomeData().then((value) => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LayoutScreen()), (route) => false));
 
     }
   }
@@ -185,6 +188,8 @@ class BLoC {
     required int cat_id,
     required context,
   }) async {
+    showLoadingDialog(context);
+
     Response response = await post(
       Uri.parse("$api/api/Categoriesupdate$id"),
       body: {
@@ -220,20 +225,21 @@ class BLoC {
             ),
             title: Text('Done :)'),
           ));
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>LayoutScreen()));
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LayoutScreen()), (route) => false);
     }
   }
 
   Future getUserFav() async {
     print("//////////////////////////////////////////////////////////////////////////////////////////////////////////");
     Response response = await get(Uri.parse('$api/api/getWish/${user.id!}'), headers: {"Authorization": "Bearer ${user.accessToken}"});
-    print(response.statusCode);
+    print(response.body);
+
     if (response.statusCode == 200) {
       Map<String, dynamic> data = json.decode(response.body);
       List<dynamic> _Temp = data['data'];
       favIds = _Temp.map((e) => favs.fromJson(e)).toList();
       print("favIds");
-      print(favIds);
+      print(favIds.length);
     }
   }
 
@@ -257,11 +263,12 @@ extension on BehaviorSubject {
 }
 class favs {
   int? userId;
+  int? product_Id;
 
-  favs(
-      {this.userId,});
+  favs({this.userId,this.product_Id,});
 
   favs.fromJson(Map<String, dynamic> json) {
     userId = json['user-id'];
+    product_Id = json['product-id'];
   }
 }

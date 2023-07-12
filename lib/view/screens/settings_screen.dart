@@ -6,6 +6,8 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pro = Provider.of<MyProvider>(context);
+    final pro2 = Provider.of<FavProvider>(context);
+    final pro3 = Provider.of<CartProvider>(context);
     return  Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -29,7 +31,10 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 30,),
             buildCard(pro: pro,txt:'Logout',icon: Icons.logout,context: context ,fun: (){
               pro.currentIndex = 0;
+              pro3.ccc();
+              pro2.FavList.clear();
               bloc.logOut(context);
+
             }),
 
           ],

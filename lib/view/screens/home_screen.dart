@@ -13,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pro = Provider.of<HomeProvider>(context);
     final pro2 = Provider.of<MyProvider>(context);
+    final pro3 = Provider.of<FavProvider>(context);
+
     List<String> _slideImages = [
       'https://picsum.photos/1200/800?random=1',
       'https://picsum.photos/1200/800?random=2',
@@ -27,6 +29,7 @@ class HomeScreen extends StatelessWidget {
       CategoryModelItem(name: 'Notebook', Icon: Icons.edit_note_sharp,num: 5),
       CategoryModelItem(name: 'Phones', Icon: Icons.phone_android,num: 6),
     ];
+    pro3.init(context);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
